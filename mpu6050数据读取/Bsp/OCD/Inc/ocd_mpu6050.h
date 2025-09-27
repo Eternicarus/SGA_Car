@@ -3,7 +3,8 @@
 
 #include "drv_hal_conf.h"
 
-#define MPU6050_ADDR                0xD0    /* mpu6050设备地址 */
+#define MPU6050_WRITEADDR           0xD0    // mpu6050设备写入地址 
+#define MPU6050_READADDR            0xD1    // mpu6050设备读取地址 
 #define MPU6050_PWR                 0x6B    //电源
 #define MPU6050_SMPLRT_DIV          0x19    //取样时钟
 #define MPU6050_CONFIG              0x1A    //低通滤波
