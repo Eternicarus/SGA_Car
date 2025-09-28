@@ -62,7 +62,8 @@
         "stm32f1xx_hal.h": "c",
         "stm32f1xx_hal_conf.h": "c",
         "drv_hal_flash.h": "c",
-        "ocd_mpu6050.h": "c"
+        "ocd_mpu6050.h": "c",
+        "ocd_ms5837.h": "c"
     },
     "files.encoding": "gb2312"
 }

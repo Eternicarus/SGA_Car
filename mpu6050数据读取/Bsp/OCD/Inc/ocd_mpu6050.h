@@ -3,6 +3,7 @@
 
 #include "drv_hal_conf.h"
 
+#define MPU6050_WHO_AM_I           	0x75
 #define MPU6050_WRITEADDR           0xD0    // mpu6050设备写入地址 
 #define MPU6050_READADDR            0xD1    // mpu6050设备读取地址 
 #define MPU6050_PWR                 0x6B    //电源
@@ -28,10 +29,61 @@
 #define MPU6050_RA_GYRO_ZOUT_H      0x47
 #define MPU6050_RA_GYRO_ZOUT_L      0x48
 
+/* 加速度数据结构体 */
+typedef struct 
+{
+	/* 原始数据 */
+	int16_t AccX;
+	int16_t AccY;
+	int16_t AccZ;
+	int16_t T;
+
+	/* 转换后的数据 */
+	float ConAccX;
+	float ConAccY;
+	float ConAccZ;
+}tagMPU6050Acc;
+
+/*角速度数据结构体*/
+typedef struct 
+{
+    /* 原始数据 */
+    short GyroX;
+    short GyroY;
+    short GyroZ;
+    
+    /* 转换后的数据 */
+    float ConGyroX;
+    float ConGyroY;
+    float ConGyroZ;
+}tagMPU6050Gyro;
+
+/*欧拉角数据结构体*/
+typedef struct 
+{
+    /* 原始数据 */
+    short Roll;
+    short Pitch;
+    short Yaw;
+    
+    /* 转换后的数据 */
+    float ConRoll;
+    float ConPitch;
+    float ConYaw;
+}tagMPU6050Angle;
+
 typedef struct
 {
-    tagIICSoft_T tIIC;
+    tagIICSoft_T        tIIC;
+    tagMPU6050Acc       stcAcc;   
+    tagMPU6050Gyro      stcGyro; 
+    tagMPU6050Angle     stcAngle; 
 }tagMPU6050_T;
 
+
+uint8_t OCD_MPU6050_Init(tagMPU6050_T *_tMPU6050);
+uint8_t MPU6050_GetID(tagMPU6050_T *_tMPU6050);
+void OCD_MPU6050_GetData(tagMPU6050_T *_tMPU6050);
+void OCD_MPU6050_DataConversion(tagMPU6050_T *_tMPU6050);
 
 #endif
