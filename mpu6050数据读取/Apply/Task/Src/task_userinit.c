@@ -13,9 +13,9 @@ void Task_UserInit(void)
 
 	if (!OCD_MPU6050_Init(&tMPU6050) == 0)
 	{
-//		 OCD_OLED_ShowString(&tOLED,0,0,"MPU6050 Err",16);
 		  uint8_t Num = OCD_MPU6050_Init(&tMPU6050);
-		  OCD_OLED_ShowNum(&tOLED,0,0,Num,10,16);
+		 OCD_OLED_ShowString(&tOLED,0,0,"MPU6050 Err",16);
+		  OCD_OLED_ShowNum(&tOLED,0,2,Num,10,16);
 		 while(1);	
  	}
 }
