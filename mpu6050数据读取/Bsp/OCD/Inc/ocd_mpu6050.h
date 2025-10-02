@@ -33,10 +33,10 @@
 typedef struct 
 {
 	/* 原始数据 */
-	int16_t AccX;
-	int16_t AccY;
-	int16_t AccZ;
-	int16_t T;
+	short AccX;
+	short AccY;
+	short AccZ;
+	short T;
 
 	/* 转换后的数据 */
 	float ConAccX;

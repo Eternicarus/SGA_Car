@@ -30,7 +30,7 @@ static uint32_t S_MPU6050_Read(tagMPU6050_T *_tMPU6050,uint8_t Reg)
     Drv_IICSoft_Start(&_tMPU6050->tIIC);
     Drv_IICSoft_SendByte(&_tMPU6050->tIIC,MPU6050_READADDR);
     Drv_IICSoft_WaitAck(&_tMPU6050->tIIC);
-    Data = Drv_IICSoft_ReadByte(&_tMPU6050->tIIC,0);
+    Data = Drv_IICSoft_ReadByte(&_tMPU6050->tIIC,1);
     Drv_IICSoft_WaitAck(&_tMPU6050->tIIC);
     Drv_IICSoft_Stop(&_tMPU6050->tIIC);
 
@@ -67,31 +67,36 @@ uint8_t OCD_MPU6050_Init(tagMPU6050_T *_tMPU6050)
     // 初始化IIC接口
     Drv_IICSoft_Init(&_tMPU6050->tIIC);
 
+	S_MPU6050_Write(_tMPU6050, MPU6050_PWR, 0x80);
+    Drv_Delay_Ms(100);
+	
     // 唤醒MPU6050（写PWR_MGMT_1寄存器，清除休眠位）
-    S_MPU6050_Write(_tMPU6050, MPU6050_PWR, 0x01);
-    Drv_Delay_Ms(20);
+    S_MPU6050_Write(_tMPU6050, MPU6050_PWR, 0x00);
+    Drv_Delay_Ms(100);
 
+    S_MPU6050_Write(_tMPU6050, MPU6050_PWR, 0x01);
+    Drv_Delay_Ms(100);
 //    // 设置陀螺仪量程 ±2000dps（GYRO_CONFIG寄存器，0x1B，0x18）
     S_MPU6050_Write(_tMPU6050, MPU6050_GYRO_CONFIG, 0x18);
-    Drv_Delay_Ms(20);
+    Drv_Delay_Ms(100);
 
     // 设置加速度计量程 ±2g（ACCEL_CONFIG寄存器，0x1C，0x00）
     S_MPU6050_Write(_tMPU6050, MPU6050_ACCEL_CONFIG, 0x18);
-    Drv_Delay_Ms(20);
+    Drv_Delay_Ms(100);
 
    // 设置采样率分频（SMPLRT_DIV寄存器，0x19，0x07，采样率1kHz/(1+7)=125Hz）
     S_MPU6050_Write(_tMPU6050, MPU6050_SMPLRT_DIV, 0x09);
-    Drv_Delay_Ms(20);
+    Drv_Delay_Ms(100);
 
    // 设置低通滤波（CONFIG寄存器，0x1A，0x06）
     S_MPU6050_Write(_tMPU6050, MPU6050_CONFIG, 0x06);
-    Drv_Delay_Ms(20);
+    Drv_Delay_Ms(100);
     
     // 检查MPU6050是否正常（读取WHO_AM_I寄存器，0x75，默认值0x68）
     uint8_t id = S_MPU6050_Read(_tMPU6050, MPU6050_WHO_AM_I);
     if (id != 0x68)
     {
-        return 1; // 初始化失败
+        return id; // 初始化失败
     }
 
     return 0; // 初始化成功
@@ -99,37 +104,37 @@ uint8_t OCD_MPU6050_Init(tagMPU6050_T *_tMPU6050)
 
 uint8_t MPU6050_GetID(tagMPU6050_T *_tMPU6050)
 {
-	return S_MPU6050_Read(_tMPU6050,0x75);		//返回WHO_AM_I寄存器的值
+	return S_MPU6050_Read(_tMPU6050,MPU6050_WHO_AM_I);		//返回WHO_AM_I寄存器的值
 }
 
 void OCD_MPU6050_GetData(tagMPU6050_T *_tMPU6050)
 {
     int16_t dataH, dataL;
     // 读取加速度数据
-//    dataH = S_MPU6050_Read(_tMPU6050, MPU6050_RA_ACCEL_XOUT_H);
-//    dataL = S_MPU6050_Read(_tMPU6050, MPU6050_RA_ACCEL_XOUT_L);
-//    _tMPU6050->stcAcc.AccX = (int16_t)((dataH << 8) | dataL);
+    dataH = S_MPU6050_Read(_tMPU6050, MPU6050_RA_ACCEL_XOUT_H);
+    dataL = S_MPU6050_Read(_tMPU6050, MPU6050_RA_ACCEL_XOUT_L);
+    _tMPU6050->stcAcc.AccX = (dataH << 8) | dataL;
 
     dataH = S_MPU6050_Read(_tMPU6050, MPU6050_RA_ACCEL_YOUT_H);
     dataL = S_MPU6050_Read(_tMPU6050, MPU6050_RA_ACCEL_YOUT_L);
     _tMPU6050->stcAcc.AccY = (dataH << 8) | dataL;
 
-//    dataH = S_MPU6050_Read(_tMPU6050, MPU6050_RA_ACCEL_ZOUT_H);
-//    dataL = S_MPU6050_Read(_tMPU6050, MPU6050_RA_ACCEL_ZOUT_L);
-//    _tMPU6050->stcAcc.AccZ = (int16_t)((dataH << 8) | dataL);
+    dataH = S_MPU6050_Read(_tMPU6050, MPU6050_RA_ACCEL_ZOUT_H);
+    dataL = S_MPU6050_Read(_tMPU6050, MPU6050_RA_ACCEL_ZOUT_L);
+    _tMPU6050->stcAcc.AccZ = (dataH << 8) | dataL;
 
-//    // 读取角速度数据
-//    dataH = S_MPU6050_Read(_tMPU6050, MPU6050_RA_GYRO_XOUT_H);
-//    dataL = S_MPU6050_Read(_tMPU6050, MPU6050_RA_GYRO_XOUT_L);
-//    _tMPU6050->stcGyro.GyroX = (int16_t)((dataH << 8) | dataL);
+   // 读取角速度数据
+   dataH = S_MPU6050_Read(_tMPU6050, MPU6050_RA_GYRO_XOUT_H);
+   dataL = S_MPU6050_Read(_tMPU6050, MPU6050_RA_GYRO_XOUT_L);
+   _tMPU6050->stcGyro.GyroX = (dataH << 8) | dataL;
 
-//    dataH = S_MPU6050_Read(_tMPU6050, MPU6050_RA_GYRO_YOUT_H);
-//    dataL = S_MPU6050_Read(_tMPU6050, MPU6050_RA_GYRO_YOUT_L);
-//    _tMPU6050->stcGyro.GyroY = (int16_t)((dataH << 8) | dataL);
+   dataH = S_MPU6050_Read(_tMPU6050, MPU6050_RA_GYRO_YOUT_H);
+   dataL = S_MPU6050_Read(_tMPU6050, MPU6050_RA_GYRO_YOUT_L);
+   _tMPU6050->stcGyro.GyroY = (dataH << 8) | dataL;
 
-//    dataH = S_MPU6050_Read(_tMPU6050, MPU6050_RA_GYRO_ZOUT_H);
-//    dataL = S_MPU6050_Read(_tMPU6050, MPU6050_RA_GYRO_ZOUT_L);
-//    _tMPU6050->stcGyro.GyroZ = (int16_t)((dataH << 8) | dataL);
+   dataH = S_MPU6050_Read(_tMPU6050, MPU6050_RA_GYRO_ZOUT_H);
+   dataL = S_MPU6050_Read(_tMPU6050, MPU6050_RA_GYRO_ZOUT_L);
+   _tMPU6050->stcGyro.GyroZ = (dataH << 8) | dataL;
 
 }
 
