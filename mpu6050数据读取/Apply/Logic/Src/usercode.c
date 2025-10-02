@@ -20,13 +20,13 @@ void UserLogic_Code(void)
 		OCD_MPU6050_GetData(&tMPU6050);
 		OCD_MPU6050_DataConversion(&tMPU6050);
 
-		OCD_OLED_ShowFloatNum(&tOLED,0,2,tMPU6050.stcAcc.ConAccX,16);
-		OCD_OLED_ShowFloatNum(&tOLED,0,4,tMPU6050.stcAcc.ConAccY,16);
-		OCD_OLED_ShowFloatNum(&tOLED,0,6,tMPU6050.stcAcc.ConAccZ,16);
+		OCD_OLED_ShowFloatNum(&tOLED,0,2,tMPU6050.stcAcc.ConAccX*1000.0f,16);
+		OCD_OLED_ShowFloatNum(&tOLED,0,4,tMPU6050.stcAcc.ConAccY*1000.0f,16);
+		OCD_OLED_ShowFloatNum(&tOLED,0,6,tMPU6050.stcAcc.ConAccZ*1000.0f,16);
 
-		OCD_OLED_ShowFloatNum(&tOLED,64,2,tMPU6050.stcGyro.ConGyroX*100,16);
-		OCD_OLED_ShowFloatNum(&tOLED,64,4,tMPU6050.stcGyro.ConGyroY*100,16);
-		OCD_OLED_ShowFloatNum(&tOLED,64,6,tMPU6050.stcGyro.ConGyroZ*100,16);
+		OCD_OLED_ShowFloatNum(&tOLED,64,2,tMPU6050.stcGyro.ConGyroX*100.0f,16);
+		OCD_OLED_ShowFloatNum(&tOLED,64,4,tMPU6050.stcGyro.ConGyroY*100.0f,16);
+		OCD_OLED_ShowFloatNum(&tOLED,64,6,tMPU6050.stcGyro.ConGyroZ*100.0f,16);
 
 		Drv_Delay_Ms(200);
 	}

@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\STM32.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\STM32.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050106: Last Updated: Thu Oct 02 14:01:55 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050106: Last Updated: Thu Oct 02 14:49:24 2025
 <BR><P>
 <H3>Maximum Stack Usage =        260 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -806,7 +806,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UserLogic_Code
 </UL>
 
-<P><STRONG><a name="[9f]"></a>OCD_MPU6050_Init</STRONG> (Thumb, 144 bytes, Stack size 16 bytes, ocd_mpu6050.o(i.OCD_MPU6050_Init))
+<P><STRONG><a name="[9f]"></a>OCD_MPU6050_Init</STRONG> (Thumb, 112 bytes, Stack size 16 bytes, ocd_mpu6050.o(i.OCD_MPU6050_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 124<LI>Call Chain = OCD_MPU6050_Init &rArr; S_MPU6050_Read &rArr; Drv_IICSoft_ReadByte &rArr; S_IICSoft_SendNAck &rArr; S_IICSoft_SDA_OutputMode &rArr; HAL_GPIO_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Drv_Delay_Ms
@@ -957,7 +957,7 @@ Global Symbols
 <P><STRONG><a name="[5]"></a>UsageFault_Handler</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, drv_hal.o(i.UsageFault_Handler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f103xe.o(RESET)
 </UL>
-<P><STRONG><a name="[b4]"></a>UserLogic_Code</STRONG> (Thumb, 216 bytes, Stack size 16 bytes, usercode.o(i.UserLogic_Code))
+<P><STRONG><a name="[b4]"></a>UserLogic_Code</STRONG> (Thumb, 246 bytes, Stack size 16 bytes, usercode.o(i.UserLogic_Code))
 <BR><BR>[Stack]<UL><LI>Max Depth = 252<LI>Call Chain = UserLogic_Code &rArr; OCD_OLED_ShowNum &rArr; OCD_OLED_ShowChar &rArr; OCD_OLED_SetCursorAddress &rArr; S_OLED_WR_Byte &rArr; Drv_IICSoft_WaitAck &rArr; Drv_IICSoft_Stop &rArr; S_IICSoft_SDA_OutputMode &rArr; HAL_GPIO_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fmul

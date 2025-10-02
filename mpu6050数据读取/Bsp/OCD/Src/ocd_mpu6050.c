@@ -60,37 +60,30 @@ static void S_MPU6050_Write(tagMPU6050_T *_tMPU6050,uint8_t Reg,uint8_t Data)
  * @brief  初始化MPU6050模块
  * @param  _tMPU6050 MPU6050的句柄指针
  * @retval 0表示初始化成功，其他值表示失败
- * @note 多个初始化就会出错，目前检测单个没问题的是陀螺仪和低通，但是两个一起就有问题
  */
 uint8_t OCD_MPU6050_Init(tagMPU6050_T *_tMPU6050)
 {
     // 初始化IIC接口
     Drv_IICSoft_Init(&_tMPU6050->tIIC);
 
-	S_MPU6050_Write(_tMPU6050, MPU6050_PWR, 0x80);
-    Drv_Delay_Ms(100);
-	
-    // 唤醒MPU6050（写PWR_MGMT_1寄存器，清除休眠位）
-    S_MPU6050_Write(_tMPU6050, MPU6050_PWR, 0x00);
-    Drv_Delay_Ms(100);
-
     S_MPU6050_Write(_tMPU6050, MPU6050_PWR, 0x01);
-    Drv_Delay_Ms(100);
-//    // 设置陀螺仪量程 ±2000dps（GYRO_CONFIG寄存器，0x1B，0x18）
+    Drv_Delay_Ms(20);
+
+    // 设置陀螺仪量程 ±2000dps（GYRO_CONFIG寄存器，0x1B，0x18）
     S_MPU6050_Write(_tMPU6050, MPU6050_GYRO_CONFIG, 0x18);
-    Drv_Delay_Ms(100);
+    Drv_Delay_Ms(20);
 
     // 设置加速度计量程 ±2g（ACCEL_CONFIG寄存器，0x1C，0x00）
-    S_MPU6050_Write(_tMPU6050, MPU6050_ACCEL_CONFIG, 0x18);
-    Drv_Delay_Ms(100);
+    S_MPU6050_Write(_tMPU6050, MPU6050_ACCEL_CONFIG, 0x00);
+    Drv_Delay_Ms(20);
 
    // 设置采样率分频（SMPLRT_DIV寄存器，0x19，0x07，采样率1kHz/(1+7)=125Hz）
-    S_MPU6050_Write(_tMPU6050, MPU6050_SMPLRT_DIV, 0x09);
-    Drv_Delay_Ms(100);
+    S_MPU6050_Write(_tMPU6050, MPU6050_SMPLRT_DIV, 0x07);
+    Drv_Delay_Ms(20);
 
    // 设置低通滤波（CONFIG寄存器，0x1A，0x06）
     S_MPU6050_Write(_tMPU6050, MPU6050_CONFIG, 0x06);
-    Drv_Delay_Ms(100);
+    Drv_Delay_Ms(20);
     
     // 检查MPU6050是否正常（读取WHO_AM_I寄存器，0x75，默认值0x68）
     uint8_t id = S_MPU6050_Read(_tMPU6050, MPU6050_WHO_AM_I);
