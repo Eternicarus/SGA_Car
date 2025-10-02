@@ -62,9 +62,11 @@
 .\objects\usercode.o: ..\Apply\Task\Inc\task_irq.h
 .\objects\usercode.o: ..\Apply\Task\Inc\task_sysinit.h
 .\objects\usercode.o: ..\Apply\Task\Inc\task_userinit.h
+.\objects\usercode.o: ..\Apply\Task\Inc\task_motorsys.h
 .\objects\usercode.o: ..\Bsp\OCD\Inc\ocd_conf.h
 .\objects\usercode.o: ..\Bsp\OCD\Inc\ocd_oled.h
 .\objects\usercode.o: ..\Bsp\OCD\Inc\ocd_mpu6050.h
 .\objects\usercode.o: ..\Bsp\Dev\Inc\dev_conf.h
 .\objects\usercode.o: ..\Bsp\Algo\Inc\algo_conf.h
+.\objects\usercode.o: ..\Bsp\Algo\Inc\algo_pid.h
 .\objects\usercode.o: ..\Apply\Logic\Inc\config.h

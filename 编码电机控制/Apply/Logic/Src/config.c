@@ -45,7 +45,7 @@ tagPWM_T PWM[] =
 	{
 		.tPWMHandle.Instance	= TIM1,         	/* 定时器1 */
 		.fDuty					= 0,				/* 初始占空比（%） */
-		.ulFreq					= 50,				/* 频率（Hz） */
+		.ulFreq					= 10000,			/* 频率（Hz） */
 		.ucChannel				= TIM_CHANNEL_1,	/* 通道 */
 		.tGPIO.tGPIOInit.Pin	= GPIO_PIN_8,		/* IO映射 */
 		.tGPIO.tGPIOPort		= GPIOA,			/* IO组映射 */
@@ -55,7 +55,7 @@ tagPWM_T PWM[] =
 	{
 		.tPWMHandle.Instance	= TIM1,         	/* 定时器1 */
 		.fDuty					= 0,				/* 初始占空比（%） */
-		.ulFreq					= 50,				/* 频率（Hz） */
+		.ulFreq					= 10000,			/* 频率（Hz） */
 		.ucChannel				= TIM_CHANNEL_4,	/* 通道 */
 		.tGPIO.tGPIOInit.Pin	= GPIO_PIN_11,		/* IO映射 */
 		.tGPIO.tGPIOPort		= GPIOA,			/* IO组映射 */

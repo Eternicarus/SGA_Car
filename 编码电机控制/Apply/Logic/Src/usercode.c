@@ -10,10 +10,10 @@
 void UserLogic_Code(void)
 {
 	
-    Drv_GPIO_Reset(&demoGPIO[0]);
-	Drv_GPIO_Set(&demoGPIO[1]);
-	Drv_GPIO_Set(&demoGPIO[2]);
-	Drv_GPIO_Reset(&demoGPIO[3]);
+    Drv_GPIO_Reset(&demoGPIO[1]);
+	Drv_GPIO_Set(&demoGPIO[0]);
+	Drv_GPIO_Set(&demoGPIO[3]);
+	Drv_GPIO_Reset(&demoGPIO[2]);
 	while(1)
 	{
 		Drv_PWM_DutyFactorSet(&PWM[0],20);

@@ -62,4 +62,5 @@
 .\objects\config.o: ..\Bsp\OCD\Inc\ocd_oled.h
 .\objects\config.o: ..\Bsp\OCD\Inc\ocd_mpu6050.h
 .\objects\config.o: ..\Bsp\Algo\Inc\algo_conf.h
+.\objects\config.o: ..\Bsp\Algo\Inc\algo_pid.h
 .\objects\config.o: ..\Bsp\Dev\Inc\dev_conf.h

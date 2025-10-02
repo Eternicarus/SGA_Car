@@ -1,5 +1,12 @@
 #include "config.h"
 
+/* PID参数 */
+tagPID_T tPID_Balance = 
+{
+	.fKp = 30.0f,
+	.fKi = 1.0f,
+	.fKd = 0.3f,
+};
 
 /* GPIO句柄示例 */
 tagGPIO_T demoGPIO[] =
@@ -7,29 +14,36 @@ tagGPIO_T demoGPIO[] =
 	
 	[0]=
 	{ 
+		.tGPIOInit.Pin 		= GPIO_PIN_12,				/* GPIO引脚 */
+		.tGPIOInit.Mode 	= GPIO_MODE_OUTPUT_PP,		/* GPIO模式 */
+		.tGPIOInit.Pull 	= GPIO_NOPULL,				/* GPIO上下拉设置，是否需要上下拉看硬件 */
+		.tGPIOInit.Speed 	= GPIO_SPEED_FREQ_HIGH,		/* GPIO速度 */	
+		.tGPIOPort 			= GPIOB,					/* GPIO分组 */
+	},
+    [1]=
+	{ 
 		.tGPIOInit.Pin 		= GPIO_PIN_13,				/* GPIO引脚 */
 		.tGPIOInit.Mode 	= GPIO_MODE_OUTPUT_PP,		/* GPIO模式 */
 		.tGPIOInit.Pull 	= GPIO_NOPULL,				/* GPIO上下拉设置，是否需要上下拉看硬件 */
 		.tGPIOInit.Speed 	= GPIO_SPEED_FREQ_HIGH,		/* GPIO速度 */	
-		.tGPIOPort 			= GPIOD,					/* GPIO分组 */
+		.tGPIOPort 			= GPIOB,					/* GPIO分组 */
 	},
-    [1]=
+    [2]=
 	{ 
 		.tGPIOInit.Pin 		= GPIO_PIN_14,				/* GPIO引脚 */
 		.tGPIOInit.Mode 	= GPIO_MODE_OUTPUT_PP,		/* GPIO模式 */
 		.tGPIOInit.Pull 	= GPIO_NOPULL,				/* GPIO上下拉设置，是否需要上下拉看硬件 */
 		.tGPIOInit.Speed 	= GPIO_SPEED_FREQ_HIGH,		/* GPIO速度 */	
-		.tGPIOPort 			= GPIOD,					/* GPIO分组 */
+		.tGPIOPort 			= GPIOB,					/* GPIO分组 */
 	},
-    [2]=
+    [3]=
 	{ 
 		.tGPIOInit.Pin 		= GPIO_PIN_15,				/* GPIO引脚 */
 		.tGPIOInit.Mode 	= GPIO_MODE_OUTPUT_PP,		/* GPIO模式 */
 		.tGPIOInit.Pull 	= GPIO_NOPULL,				/* GPIO上下拉设置，是否需要上下拉看硬件 */
 		.tGPIOInit.Speed 	= GPIO_SPEED_FREQ_HIGH,		/* GPIO速度 */	
-		.tGPIOPort 			= GPIOD,					/* GPIO分组 */
+		.tGPIOPort 			= GPIOB,					/* GPIO分组 */
 	},
-    
 };
 
 /* 串口句柄示例 */
@@ -135,4 +149,28 @@ tagMPU6050_T tMPU6050 =
 	.tIIC.tIICSoft[1].tGPIOInit.Pull		= GPIO_PULLUP,				/* GPIO上下拉设置，是否需要上下拉看硬件 */
 	.tIIC.tIICSoft[1].tGPIOInit.Speed		= GPIO_SPEED_FREQ_HIGH,		/* GPIO速度 */	
 	.tIIC.tIICSoft[1].tGPIOPort 			= GPIOB,					/* GPIO分组 */
+};
+
+tagPWM_T PWM[] =
+{
+	[0] =
+	{
+		.tPWMHandle.Instance	= TIM1,         	/* 定时器1 */
+		.fDuty					= 0,				/* 初始占空比（%） */
+		.ulFreq					= 10000,			/* 频率（Hz） */
+		.ucChannel				= TIM_CHANNEL_1,	/* 通道 */
+		.tGPIO.tGPIOInit.Pin	= GPIO_PIN_8,		/* IO映射 */
+		.tGPIO.tGPIOPort		= GPIOA,			/* IO组映射 */
+		.tGPIO.ucAFMode			= NO_REMAP,			/* IO重映射模式 */
+	},	 	
+	[1] =
+	{
+		.tPWMHandle.Instance	= TIM1,         	/* 定时器1 */
+		.fDuty					= 0,				/* 初始占空比（%） */
+		.ulFreq					= 10000,			/* 频率（Hz） */
+		.ucChannel				= TIM_CHANNEL_4,	/* 通道 */
+		.tGPIO.tGPIOInit.Pin	= GPIO_PIN_11,		/* IO映射 */
+		.tGPIO.tGPIOPort		= GPIOA,			/* IO组映射 */
+		.tGPIO.ucAFMode			= NO_REMAP,		    /* IO重映射模式 */
+	},	  
 };

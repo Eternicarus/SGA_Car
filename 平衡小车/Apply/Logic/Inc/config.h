@@ -14,6 +14,10 @@ extern tagUART_T demoUart;
 
 extern tagOLED_T tOLED;
 
+extern tagPWM_T PWM[];
+
 extern tagMPU6050_T tMPU6050;
+
+extern tagPID_T tPID_Balance;
 
 #endif
