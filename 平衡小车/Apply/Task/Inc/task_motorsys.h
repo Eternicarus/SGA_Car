@@ -5,6 +5,6 @@
 void Motor_Forward(void);
 void Motor_Backward(void);
 void Motor_Stop(void);
-void Motor_SetSpeed(float _usSpeed);
+void Motor_SetSpeed(uint8_t _usSpeed);
 
 #endif // __TASK_MOTORSYS_H_

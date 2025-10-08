@@ -429,6 +429,11 @@
               <FileType>1</FileType>
               <FilePath>..\Apply\Task\Src\task_motorsys.c</FilePath>
             </File>
+            <File>
+              <FileName>task_mpu6050.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Apply\Task\Src\task_mpu6050.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

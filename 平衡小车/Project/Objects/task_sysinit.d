@@ -41,6 +41,7 @@
 .\objects\task_sysinit.o: ..\Apply\Task\Inc\task_sysinit.h
 .\objects\task_sysinit.o: ..\Apply\Task\Inc\task_userinit.h
 .\objects\task_sysinit.o: ..\Apply\Task\Inc\task_motorsys.h
+.\objects\task_sysinit.o: ..\Apply\Task\Inc\task_mpu6050.h
 .\objects\task_sysinit.o: ..\Apply\Logic\Inc\config.h
 .\objects\task_sysinit.o: ..\Driver\Inc\drv_hal_conf.h
 .\objects\task_sysinit.o: ..\Driver\Inc\drv_hal_delay.h

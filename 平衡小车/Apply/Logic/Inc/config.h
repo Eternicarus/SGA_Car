@@ -20,4 +20,6 @@ extern tagMPU6050_T tMPU6050;
 
 extern tagPID_T tPID_Balance;
 
+extern tagTIM_T tTimer2;
+
 #endif

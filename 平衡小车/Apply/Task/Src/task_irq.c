@@ -74,8 +74,15 @@ void UART5_IRQHandler(void)
 */
 void TIM2_IRQHandler(void)
 {
-	/* 示例 */
-    //Drv_Timer_IRQHandler(&demoTIM);
+    Drv_Timer_IRQHandler(&tTimer2);
+    static uint8_t count = 0;
+    if (++count >= 8)
+    {
+        count = 0;
+        mpu6050_pending++;
+        if (mpu6050_pending > 5)  // 防止过多堆积
+            mpu6050_pending = 5;
+    }
 }
 
 /**
@@ -85,7 +92,7 @@ void TIM2_IRQHandler(void)
 void TIM3_IRQHandler(void)
 {
 	/* 示例 */
-    //Drv_Timer_IRQHandler(&demoTIM);
+    // Drv_Timer_IRQHandler(&demoTIM);
 }
 
 /**

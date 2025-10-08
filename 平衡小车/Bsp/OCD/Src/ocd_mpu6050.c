@@ -66,7 +66,7 @@ uint8_t OCD_MPU6050_Init(tagMPU6050_T *_tMPU6050)
     // 初始化IIC接口
     Drv_IICSoft_Init(&_tMPU6050->tIIC);
 
-    S_MPU6050_Write(_tMPU6050, MPU6050_PWR, 0x01);
+    S_MPU6050_Write(_tMPU6050, MPU6050_PWR, 0x00);
     Drv_Delay_Ms(20);
 
     // 设置陀螺仪量程 ±2000dps（GYRO_CONFIG寄存器，0x1B，0x18）
@@ -95,11 +95,21 @@ uint8_t OCD_MPU6050_Init(tagMPU6050_T *_tMPU6050)
     return 0; // 初始化成功
 }
 
+/**
+ * @brief  获取MPU6050的ID
+ * @param  _tMPU6050 MPU6050的句柄指针
+ * @retval MPU6050的ID值
+ */
 uint8_t MPU6050_GetID(tagMPU6050_T *_tMPU6050)
 {
 	return S_MPU6050_Read(_tMPU6050,MPU6050_WHO_AM_I);		//返回WHO_AM_I寄存器的值
 }
 
+/**
+ * @brief  获取MPU6050的加速度和角速度数据
+ * @param  _tMPU6050 MPU6050的句柄指针
+ * @retval 无
+ */
 void OCD_MPU6050_GetData(tagMPU6050_T *_tMPU6050)
 {
     int16_t dataH, dataL;
@@ -131,8 +141,11 @@ void OCD_MPU6050_GetData(tagMPU6050_T *_tMPU6050)
 
 }
 
-void OCD_MPU6050_DataConversion(tagMPU6050_T *_tMPU6050)
+void OCD_MPU6050_DataConversion(tagMPU6050_T *_tMPU6050,float dt)
 {
+    float acc_roll;
+    float acc_pitch;
+    
     // 加速度转换，单位g
     _tMPU6050->stcAcc.ConAccX = (float)_tMPU6050->stcAcc.AccX / 16384.0f;
     _tMPU6050->stcAcc.ConAccY = (float)_tMPU6050->stcAcc.AccY / 16384.0f;
@@ -142,4 +155,12 @@ void OCD_MPU6050_DataConversion(tagMPU6050_T *_tMPU6050)
     _tMPU6050->stcGyro.ConGyroX = (float)_tMPU6050->stcGyro.GyroX / 16.4f;
     _tMPU6050->stcGyro.ConGyroY = (float)_tMPU6050->stcGyro.GyroY / 16.4f;
     _tMPU6050->stcGyro.ConGyroZ = (float)_tMPU6050->stcGyro.GyroZ / 16.4f;
+
+    acc_roll = atan2(_tMPU6050->stcAcc.ConAccY, _tMPU6050->stcAcc.ConAccZ) * RAD2DEG;
+    acc_pitch = atan2(-_tMPU6050->stcAcc.ConAccX, _tMPU6050->stcAcc.ConAccZ) * RAD2DEG;
+
+    // 欧拉角计算（简单积分法，实际应用中建议使用滤波算法如互补滤波或卡尔曼滤波）
+    _tMPU6050->stcAngle.ConRoll = (_tMPU6050->stcAngle.ConRoll + _tMPU6050->stcGyro.ConGyroY * dt) * 0.98f + acc_roll * 0.02f;
+    _tMPU6050->stcAngle.ConPitch =  (_tMPU6050->stcAngle.ConPitch + _tMPU6050->stcGyro.ConGyroX * dt) * 0.98f + acc_pitch * 0.02f;
+    _tMPU6050->stcAngle.ConYaw = _tMPU6050->stcAngle.ConYaw + _tMPU6050->stcGyro.ConGyroZ * dt; // 无加速度计数据修正
 }

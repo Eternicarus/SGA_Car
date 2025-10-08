@@ -41,6 +41,7 @@
 .\objects\task_irq.o: ..\Apply\Task\Inc\task_sysinit.h
 .\objects\task_irq.o: ..\Apply\Task\Inc\task_userinit.h
 .\objects\task_irq.o: ..\Apply\Task\Inc\task_motorsys.h
+.\objects\task_irq.o: ..\Apply\Task\Inc\task_mpu6050.h
 .\objects\task_irq.o: ..\Apply\Logic\Inc\usercode.h
 .\objects\task_irq.o: ..\Apply\Logic\Inc\config.h
 .\objects\task_irq.o: ..\Driver\Inc\drv_hal_conf.h

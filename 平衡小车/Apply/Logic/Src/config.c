@@ -3,15 +3,14 @@
 /* PID参数 */
 tagPID_T tPID_Balance = 
 {
-	.fKp = 30.0f,
-	.fKi = 1.0f,
-	.fKd = 0.3f,
+	.fKp = 50.0f,
+	.fKi = 0.0f,
+	.fKd = 0.0f,
 };
 
 /* GPIO句柄示例 */
 tagGPIO_T demoGPIO[] =
 {
-	
 	[0]=
 	{ 
 		.tGPIOInit.Pin 		= GPIO_PIN_12,				/* GPIO引脚 */
@@ -173,4 +172,13 @@ tagPWM_T PWM[] =
 		.tGPIO.tGPIOPort		= GPIOA,			/* IO组映射 */
 		.tGPIO.ucAFMode			= NO_REMAP,		    /* IO重映射模式 */
 	},	  
+};
+
+tagTIM_T tTimer2 = 
+{
+	.tTimerHandle.Instance				= TIM2,						/* 通用定时器2 */
+	.fTimingLength						= 1,						/* 定时时长(ms) */
+
+	.ucPriority							= 1,						/* 中断优先级 */
+	.ucSubPriority						= 2,						/* 中断子优先级 */
 };

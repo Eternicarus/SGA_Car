@@ -7,5 +7,6 @@
 #include "task_sysinit.h"
 #include "task_userinit.h"
 #include "task_motorsys.h"
+#include "task_mpu6050.h"
 
 #endif

@@ -13,11 +13,8 @@ void Task_UserInit(void)
 
 	Drv_PWM_Init(PWM,2);
 
-	if (!OCD_MPU6050_Init(&tMPU6050) == 0)
-	{
- 		uint8_t Num = OCD_MPU6050_Init(&tMPU6050);
-		OCD_OLED_ShowString(&tOLED,0,0,"MPU6050 Err",16);
-		OCD_OLED_ShowNum(&tOLED,0,2,Num,10,16);
-		while(1);	
- 	}
+	Task_MPU6050_Init();
+
+	Drv_Timer_Init(&tTimer2);
+	Drv_Timer_Enable(&tTimer2);
 }
