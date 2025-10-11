@@ -182,3 +182,12 @@ tagTIM_T tTimer2 =
 	.ucPriority							= 1,						/* 中断优先级 */
 	.ucSubPriority						= 2,						/* 中断子优先级 */
 };
+
+tagTIM_T tTimer3 = 
+{
+	.tTimerHandle.Instance				= TIM3,						/* 通用定时器3 */
+	.fTimingLength						= 2,						/* 定时时长(ms) */
+
+	.ucPriority							= 2,						/* 中断优先级 */
+	.ucSubPriority						= 1,						/* 中断子优先级 */
+};

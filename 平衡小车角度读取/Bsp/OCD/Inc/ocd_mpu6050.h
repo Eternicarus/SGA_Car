@@ -36,10 +36,9 @@
 typedef struct 
 {
 	/* 原始数据 */
-	short AccX;
-	short AccY;
-	short AccZ;
-	short T;
+	short AccX[5];
+	short AccY[5];
+	short AccZ[5];
 
 	/* 转换后的数据 */
 	float ConAccX;
@@ -51,10 +50,10 @@ typedef struct
 typedef struct 
 {
     /* 原始数据 */
-    short GyroX;
-    short GyroY;
-    short GyroZ;
-    
+    short GyroX[5];
+    short GyroY[5];
+    short GyroZ[5];
+
     /* 转换后的数据 */
     float ConGyroX;
     float ConGyroY;
@@ -89,7 +88,7 @@ typedef struct
 
 uint8_t OCD_MPU6050_Init(tagMPU6050_T *_tMPU6050);
 uint8_t MPU6050_GetID(tagMPU6050_T *_tMPU6050);
-void OCD_MPU6050_GetData(tagMPU6050_T *_tMPU6050);
-void OCD_MPU6050_DataConversion(tagMPU6050_T *_tMPU6050,float dt);
+void OCD_MPU6050_GetData(tagMPU6050_T *_tMPU6050,uint8_t Num);
+void OCD_MPU6050_DataConversion(tagMPU6050_T *_tMPU6050,float dt,uint8_t Num);
 
 #endif

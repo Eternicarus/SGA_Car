@@ -110,51 +110,51 @@ uint8_t MPU6050_GetID(tagMPU6050_T *_tMPU6050)
  * @param  _tMPU6050 MPU6050的句柄指针
  * @retval 无
  */
-void OCD_MPU6050_GetData(tagMPU6050_T *_tMPU6050)
+void OCD_MPU6050_GetData(tagMPU6050_T *_tMPU6050,uint8_t Num)
 {
     int16_t dataH, dataL;
     // 读取加速度数据
     dataH = S_MPU6050_Read(_tMPU6050, MPU6050_RA_ACCEL_XOUT_H);
     dataL = S_MPU6050_Read(_tMPU6050, MPU6050_RA_ACCEL_XOUT_L);
-    _tMPU6050->stcAcc.AccX = (dataH << 8) | dataL;
+    _tMPU6050->stcAcc.AccX[Num] = (dataH << 8) | dataL;
 
     dataH = S_MPU6050_Read(_tMPU6050, MPU6050_RA_ACCEL_YOUT_H);
     dataL = S_MPU6050_Read(_tMPU6050, MPU6050_RA_ACCEL_YOUT_L);
-    _tMPU6050->stcAcc.AccY = (dataH << 8) | dataL;
+    _tMPU6050->stcAcc.AccY[Num] = (dataH << 8) | dataL;
 
     dataH = S_MPU6050_Read(_tMPU6050, MPU6050_RA_ACCEL_ZOUT_H);
     dataL = S_MPU6050_Read(_tMPU6050, MPU6050_RA_ACCEL_ZOUT_L);
-    _tMPU6050->stcAcc.AccZ = (dataH << 8) | dataL;
+    _tMPU6050->stcAcc.AccZ[Num] = (dataH << 8) | dataL;
 
    // 读取角速度数据
    dataH = S_MPU6050_Read(_tMPU6050, MPU6050_RA_GYRO_XOUT_H);
    dataL = S_MPU6050_Read(_tMPU6050, MPU6050_RA_GYRO_XOUT_L);
-   _tMPU6050->stcGyro.GyroX = (dataH << 8) | dataL;
+   _tMPU6050->stcGyro.GyroX[Num] = (dataH << 8) | dataL;
 
    dataH = S_MPU6050_Read(_tMPU6050, MPU6050_RA_GYRO_YOUT_H);
    dataL = S_MPU6050_Read(_tMPU6050, MPU6050_RA_GYRO_YOUT_L);
-   _tMPU6050->stcGyro.GyroY = (dataH << 8) | dataL;
+   _tMPU6050->stcGyro.GyroY[Num] = (dataH << 8) | dataL;
 
    dataH = S_MPU6050_Read(_tMPU6050, MPU6050_RA_GYRO_ZOUT_H);
    dataL = S_MPU6050_Read(_tMPU6050, MPU6050_RA_GYRO_ZOUT_L);
-   _tMPU6050->stcGyro.GyroZ = (dataH << 8) | dataL;
+   _tMPU6050->stcGyro.GyroZ[Num] = (dataH << 8) | dataL;
 
 }
 
-void OCD_MPU6050_DataConversion(tagMPU6050_T *_tMPU6050,float dt)
+void OCD_MPU6050_DataConversion(tagMPU6050_T *_tMPU6050,float dt,uint8_t Num)
 {
     float acc_roll;
     float acc_pitch;
     
     // 加速度转换，单位g
-    _tMPU6050->stcAcc.ConAccX = (float)_tMPU6050->stcAcc.AccX / 16384.0f;
-    _tMPU6050->stcAcc.ConAccY = (float)_tMPU6050->stcAcc.AccY / 16384.0f;
-    _tMPU6050->stcAcc.ConAccZ = (float)_tMPU6050->stcAcc.AccZ / 16384.0f;
+    _tMPU6050->stcAcc.ConAccX = (float)_tMPU6050->stcAcc.AccX[Num] / 16384.0f;
+    _tMPU6050->stcAcc.ConAccY = (float)_tMPU6050->stcAcc.AccY[Num] / 16384.0f;
+    _tMPU6050->stcAcc.ConAccZ = (float)_tMPU6050->stcAcc.AccZ[Num] / 16384.0f;
 
     // 角速度转换，单位度每秒
-    _tMPU6050->stcGyro.ConGyroX = (float)_tMPU6050->stcGyro.GyroX / 16.4f + FIX_GYROX;
-    _tMPU6050->stcGyro.ConGyroY = (float)_tMPU6050->stcGyro.GyroY / 16.4f;
-    _tMPU6050->stcGyro.ConGyroZ = (float)_tMPU6050->stcGyro.GyroZ / 16.4f;
+    _tMPU6050->stcGyro.ConGyroX = (float)_tMPU6050->stcGyro.GyroX[Num] / 16.4f + FIX_GYROX;
+    _tMPU6050->stcGyro.ConGyroY = (float)_tMPU6050->stcGyro.GyroY[Num] / 16.4f;
+    _tMPU6050->stcGyro.ConGyroZ = (float)_tMPU6050->stcGyro.GyroZ[Num] / 16.4f;
 
     acc_roll = atan2(_tMPU6050->stcAcc.ConAccX, _tMPU6050->stcAcc.ConAccZ) * RAD2DEG;
     acc_pitch = atan2(_tMPU6050->stcAcc.ConAccY, _tMPU6050->stcAcc.ConAccZ) * RAD2DEG;

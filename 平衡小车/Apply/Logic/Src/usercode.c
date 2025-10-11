@@ -14,18 +14,13 @@ uint8_t Num;
 /* ÓÃ»§Âß¼­´úÂë */
 void UserLogic_Code(void)
 {
-	// ID = MPU6050_GetID(&tMPU6050);
-//	OCD_OLED_ShowString(&tOLED,0,0,"MPU6050 ID:",16);
-//	OCD_OLED_ShowNum(&tOLED,96,0,ID,3,16);
-//	Drv_Delay_Ms(100);
-//	OCD_OLED_ShowString(&tOLED,0,0,"Receive:",16);
 	printf("hi\r\n");
 	while(1)
 	{
 		// OCD_OLED_ShowFloatNum(&tOLED,0,2,tMPU6050.stcGyro.ConGyroX,16);
 		// OCD_OLED_ShowFloatNum(&tOLED,0,4,tMPU6050.stcAcc.ConAccY,16);
 		OCD_OLED_ShowFloatNum(&tOLED,0,2,tMPU6050.stcAngle.ConPitch,16);
-//		 memset(ReceBuf,0,sizeof(ReceBuf));
+
 		// Speed = -Algo_PID_Calculate(&tPID_Balance,tMPU6050.stcAngle.ConPitch,0.0f);
 		// OCD_OLED_ShowFloatNum(&tOLED,0,0,Speed,16);
 
@@ -45,15 +40,7 @@ void UserLogic_Code(void)
 		Num = Drv_Uart_Receive_DMA(&demoUart,ReceBuf);
 		if(Num != 0)
 		{
-			// Drv_Uart_Transmit_DMA(&demoUart,ReceBuf,Num);
-			printf("%s\r\n",ReceBuf);
-			printf("%d\r\n",Num);
-////			OCD_OLED_ShowString(&tOLED,0,0,"Hello SGA!",16);
-////			OCD_OLED_ShowFloatNum(&tOLED,0,4,tMPU6050.stcAngle.ConPitch,16);
+			Drv_Uart_Transmit_DMA(&demoUart,ReceBuf,Num);
 		}
-		// else
-		// 	memset(ReceBuf,0,10);
-//		Drv_Uart_Transmit_DMA(&demoUart,"Hello",40);
-		Drv_Delay_Ms(100);
 	}
 }

@@ -75,15 +75,15 @@ void UART5_IRQHandler(void)
 void TIM2_IRQHandler(void)
 {
     Drv_Timer_IRQHandler(&tTimer2);
-    // static uint8_t count = 0;
-    // if (++count >= 8)
+    if (++mpu6050_pending <= 5)
+        OCD_MPU6050_GetData(&tMPU6050, mpu6050_pending);
     // {
     //     count = 0;
         // mpu6050_pending++;
         // if (mpu6050_pending > 5)  // 防止过多堆积
         //     mpu6050_pending = 5;
     // }
-    Task_MPU6050_DataProcess(); // 8ms周期
+    // Task_MPU6050_DataProcess(); // 8ms周期
 }
 
 /**
@@ -93,7 +93,16 @@ void TIM2_IRQHandler(void)
 void TIM3_IRQHandler(void)
 {
 	/* 示例 */
-    // Drv_Timer_IRQHandler(&demoTIM);
+    Drv_Timer_IRQHandler(&tTimer3);
+    if(mpu6050_pending)
+    {
+        OCD_MPU6050_DataConversion(&tMPU6050,MPU6050_READ_INTERVAL_MS, mpu6050_pending);
+        // 减去初始角度偏移
+        tMPU6050.stcAngle.ConRoll -= tMPU6050.stcFixAngle.FixRoll;
+        tMPU6050.stcAngle.ConPitch -= tMPU6050.stcFixAngle.FixPitch;
+        tMPU6050.stcAngle.ConYaw -= tMPU6050.stcFixAngle.FixYaw;
+        mpu6050_pending--;
+    }
 }
 
 /**

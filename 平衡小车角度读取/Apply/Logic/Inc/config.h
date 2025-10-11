@@ -22,4 +22,6 @@ extern tagPID_T tPID_Balance;
 
 extern tagTIM_T tTimer2;
 
+extern tagTIM_T tTimer3;
+
 #endif
