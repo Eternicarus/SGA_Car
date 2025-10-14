@@ -1,0 +1,59 @@
+{
+	"folders": [
+		{
+			"name": "📁 Root (Source Code)",
+			"path": "."
+		},
+		{
+			"name": "🔧 Project (Keil)",
+			"path": "Project"
+		}
+	],
+	"settings": {
+		"files.exclude": {
+			"**/.git": true,
+			"**/Objects": true,
+			"**/Listings": true,
+			"**/*.uvguix.*": true
+		},
+		"search.exclude": {
+			"**/Objects": true,
+			"**/Listings": true,
+			"**/node_modules": true
+		},
+		"C_Cpp.default.includePath": [
+			"${workspaceFolder:Root (Source Code)}/Apply/Logic/Inc",
+			"${workspaceFolder:Root (Source Code)}/Apply/Task/Inc",
+			"${workspaceFolder:Root (Source Code)}/Bsp/OCD/Inc",
+			"${workspaceFolder:Root (Source Code)}/Bsp/FatFs/Inc",
+			"${workspaceFolder:Root (Source Code)}/Bsp/Algo/Inc",
+			"${workspaceFolder:Root (Source Code)}/Bsp/Dev/Inc",
+			"${workspaceFolder:Root (Source Code)}/Bsp/RTOS/RT-Thread/include",
+			"${workspaceFolder:Root (Source Code)}/Bsp/RTOS/FreeRTOS/include",
+			"${workspaceFolder:Root (Source Code)}/Driver/Inc",
+			"${workspaceFolder:Root (Source Code)}/Hardware/STM32F1XX/CMSIS/Include",
+			"${workspaceFolder:Root (Source Code)}/Hardware/STM32F1XX/CMSIS/Device/ST/STM32F1xx/Include",
+			"${workspaceFolder:Root (Source Code)}/Hardware/STM32F1XX/STM32F1xx_HAL_Driver/Inc",
+			"${workspaceFolder:Root (Source Code)}/Hardware/STM32F1XX/STM32F1xx_HAL_Driver/Inc/Legacy"
+		],
+		"C_Cpp.default.defines": [
+			"USE_HAL_DRIVER",
+			"STM32F103xE",
+			"STM32F1_SGA_ENABLE"
+		],
+		"C_Cpp.default.compilerPath": "",
+		"C_Cpp.default.cStandard": "c99",
+		"C_Cpp.default.intelliSenseMode": "gcc-arm",
+		"files.associations": {
+			"*.h": "c",
+			"*.c": "c"
+		}
+	},
+	"extensions": {
+		"recommendations": [
+			"cl.eide",
+			"ms-vscode.cpptools",
+			"github.copilot"
+		]
+	}
+}

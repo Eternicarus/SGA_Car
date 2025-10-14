@@ -40,16 +40,26 @@ void USART2_IRQHandler(void)
 	/* 示例 */
     //Drv_Uart_IRQHandler(&tJY901B.tUART);		/* 必需部分 */
 }
-
+volatile uint32_t irq_count = 0;  // 中断触发次数
 /**
  * @brief 串口3中断服务函数
  * @retval Null
 */
 void USART3_IRQHandler(void)
 {
-	Drv_Uart_IRQHandler(&demoUart);
-    Drv_Uart_DMA_RxHandler(&demoUart);        /* 必需部分 */
-//	Drv_Uart_DMA_TxHandler(&demoUart);
+    uint16_t len;
+    
+    Drv_Uart_IRQHandler(&demoUart);
+    Drv_Uart_DMA_RxHandler(&demoUart);
+    
+    irq_count++;  // 记录中断次数
+    
+    // 立即读取数据，避免覆盖
+    len = Drv_Uart_Receive_DMA(&demoUart, ReceBuf);
+    if(len > 0)
+    {
+        Num = len;
+    }
 }
 
 void DMA1_Channel2_IRQHandler(void)

@@ -1,0 +1,31 @@
+/*
+ * =====================================================
+ * 需要在 Driver/Inc/drv_hal_uart.h 中添加的函数声明
+ * =====================================================
+ * 请在文件末尾、#endif 之前添加以下声明
+ */
+
+/**
+ * @brief 串口DMA安全接收处理函数(用于串口中断处理函数中)
+ * @note 改进版：在空闲中断触发时立即复制数据到用户缓冲区，避免被后续帧覆盖
+ * @param _tUART-串口结构体指针
+ * @param _ucpUserBuf-用户缓冲区指针
+ * @param _usUserBufSize-用户缓冲区大小
+ * @param _pusRxLen-接收到的实际长度（返回值）
+ * @retval uint8_t 返回值：1=成功接收一帧，0=未接收到数据
+*/
+uint8_t Drv_Uart_DMA_RxHandler_Safe(tagUART_T *_tUART, uint8_t *_ucpUserBuf, uint16_t _usUserBufSize, uint16_t *_pusRxLen);
+
+/*
+ * =====================================================
+ * 添加位置示例：
+ * =====================================================
+ * 
+ * // ...existing code...
+ * void Drv_Uart_DMA_IRQHandler(tagUART_T *_tUART);
+ * 
+ * // ? 新增函数声明
+ * uint8_t Drv_Uart_DMA_RxHandler_Safe(tagUART_T *_tUART, uint8_t *_ucpUserBuf, uint16_t _usUserBufSize, uint16_t *_pusRxLen);
+ * 
+ * #endif  // DRV_HAL_UART_ENABLE
+ */

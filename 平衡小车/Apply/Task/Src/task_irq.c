@@ -4,51 +4,51 @@
 
 
 /**
- * @brief Íâ²¿ÖĞ¶Ï5-9·şÎñº¯Êı
+ * @brief å¤–éƒ¨ä¸­æ–­5-9æœåŠ¡å‡½æ•°
  * @retval Null
 */
 void EXTI9_5_IRQHandler(void)
 {
-    //Drv_GPIO_EXTI_IRQHandler(&DS3231_ALARM_IRQ);	/* ±ØĞë¼Ó£¬²ÎÊıĞèĞŞ¸Ä */
+    //Drv_GPIO_EXTI_IRQHandler(&DS3231_ALARM_IRQ);	/* å¿…é¡»åŠ ï¼Œå‚æ•°éœ€ä¿®æ”¹ */
 }
 
 /**
- * @brief Íâ²¿ÖĞ¶Ï10-15·şÎñº¯Êı
+ * @brief å¤–éƒ¨ä¸­æ–­10-15æœåŠ¡å‡½æ•°
  * @retval Null
 */
 void EXTI15_10_IRQHandler(void)
 {
-    //Drv_GPIO_EXTI_IRQHandler(&tPCUart.tGPIO[1]);	/* ±ØĞë¼Ó£¬²ÎÊıĞèĞŞ¸Ä */
+    //Drv_GPIO_EXTI_IRQHandler(&tPCUart.tGPIO[1]);	/* å¿…é¡»åŠ ï¼Œå‚æ•°éœ€ä¿®æ”¹ */
 }
 
 /**
- * @brief ´®¿Ú1ÖĞ¶Ï·şÎñº¯Êı
+ * @brief ä¸²å£1ä¸­æ–­æœåŠ¡å‡½æ•°
  * @retval Null
 */
 void USART1_IRQHandler(void)
 {
-	/* Ê¾Àı */
-    //Drv_Uart_IRQHandler(&tPCUart);		/* ±ØĞè²¿·Ö */
+	/* ç¤ºä¾‹ */
+    //Drv_Uart_IRQHandler(&tPCUart);		/* å¿…éœ€éƒ¨åˆ† */
 }
 
 /**
- * @brief ´®¿Ú2ÖĞ¶Ï·şÎñº¯Êı
+ * @brief ä¸²å£2ä¸­æ–­æœåŠ¡å‡½æ•°
  * @retval Null
 */
 void USART2_IRQHandler(void)
 {
-	/* Ê¾Àı */
-    //Drv_Uart_IRQHandler(&tJY901B.tUART);		/* ±ØĞè²¿·Ö */
+	/* ç¤ºä¾‹ */
+    //Drv_Uart_IRQHandler(&tJY901B.tUART);		/* å¿…éœ€éƒ¨åˆ† */
 }
 
 /**
- * @brief ´®¿Ú3ÖĞ¶Ï·şÎñº¯Êı
+ * @brief ä¸²å£3ä¸­æ–­æœåŠ¡å‡½æ•°
  * @retval Null
 */
 void USART3_IRQHandler(void)
 {
 	Drv_Uart_IRQHandler(&demoUart);
-    Drv_Uart_DMA_RxHandler(&demoUart);        /* ±ØĞè²¿·Ö */
+    Drv_Uart_DMA_RxHandler(&demoUart);        /* å¿…éœ€éƒ¨åˆ† */
 //	Drv_Uart_DMA_TxHandler(&demoUart);
 }
 
@@ -57,14 +57,14 @@ void DMA1_Channel2_IRQHandler(void)
     Drv_Uart_DMA_IRQHandler(&demoUart);
 }
 
-/* ´®¿Ú·¢ËÍÍê³É»Øµ÷º¯Êı */
+/* ä¸²å£å‘é€å®Œæˆå›è°ƒå‡½æ•° */
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
 {
 	Drv_Uart_DMA_TxHandler(&demoUart);
 }
 
 /**
- * @brief ´®¿Ú4ÖĞ¶Ï·şÎñº¯Êı
+ * @brief ä¸²å£4ä¸­æ–­æœåŠ¡å‡½æ•°
  * @retval Null
 */
 void UART4_IRQHandler(void)
@@ -73,7 +73,7 @@ void UART4_IRQHandler(void)
 }
 
 /**
- * @brief ´®¿Ú5ÖĞ¶Ï·şÎñº¯Êı
+ * @brief ä¸²å£5ä¸­æ–­æœåŠ¡å‡½æ•°
  * @retval Null
 */
 void UART5_IRQHandler(void)
@@ -82,7 +82,7 @@ void UART5_IRQHandler(void)
 }
 
 /**
- * @brief ¶¨Ê±Æ÷2ÖĞ¶Ï·şÎñº¯Êı
+ * @brief å®šæ—¶å™¨2ä¸­æ–­æœåŠ¡å‡½æ•°
  * @retval Null
 */
 void TIM2_IRQHandler(void)
@@ -93,17 +93,17 @@ void TIM2_IRQHandler(void)
 }
 
 /**
- * @brief ¶¨Ê±Æ÷3ÖĞ¶Ï·şÎñº¯Êı
+ * @brief å®šæ—¶å™¨3ä¸­æ–­æœåŠ¡å‡½æ•°
  * @retval Null
 */
 void TIM3_IRQHandler(void)
 {
-	/* Ê¾Àı */
+	/* ç¤ºä¾‹ */
    Drv_Timer_IRQHandler(&tTimer3);
    if(mpu6050_pending)
    {
        OCD_MPU6050_DataConversion(&tMPU6050,MPU6050_READ_INTERVAL_MS, mpu6050_pending);
-       // ¼õÈ¥³õÊ¼½Ç¶ÈÆ«ÒÆ
+       // å‡å»åˆå§‹è§’åº¦åç§»
        tMPU6050.stcAngle.ConRoll -= tMPU6050.stcFixAngle.FixRoll;
        tMPU6050.stcAngle.ConPitch -= tMPU6050.stcFixAngle.FixPitch;
        tMPU6050.stcAngle.ConYaw -= tMPU6050.stcFixAngle.FixYaw;
@@ -112,42 +112,42 @@ void TIM3_IRQHandler(void)
 }
 
 /**
- * @brief ¶¨Ê±Æ÷4ÖĞ¶Ï·şÎñº¯Êı
+ * @brief å®šæ—¶å™¨4ä¸­æ–­æœåŠ¡å‡½æ•°
  * @retval Null
 */
 void TIM4_IRQHandler(void)
 {
-    /* Ê¾Àı */
+    /* ç¤ºä¾‹ */
     //Drv_Timer_IRQHandler(&demoTIM);
 }
 
 /**
- * @brief ¶¨Ê±Æ÷5ÖĞ¶Ï·şÎñº¯Êı
+ * @brief å®šæ—¶å™¨5ä¸­æ–­æœåŠ¡å‡½æ•°
  * @retval Null
 */
 void TIM5_IRQHandler(void)
 {
-    /* Ê¾Àı */
+    /* ç¤ºä¾‹ */
     //Drv_Timer_IRQHandler(&demoTIM);
 }
 
 /**
- * @brief ¶¨Ê±Æ÷6ÖĞ¶Ï·şÎñº¯Êı
+ * @brief å®šæ—¶å™¨6ä¸­æ–­æœåŠ¡å‡½æ•°
  * @retval Null
 */
 void TIM6_IRQHandler(void)
 {
-    /* Ê¾Àı */
+    /* ç¤ºä¾‹ */
     //Drv_Timer_IRQHandler(&demoTIM);
 }
 
 /**
- * @brief ¶¨Ê±Æ÷7ÖĞ¶Ï·şÎñº¯Êı
+ * @brief å®šæ—¶å™¨7ä¸­æ–­æœåŠ¡å‡½æ•°
  * @retval Null
 */
 void TIM7_IRQHandler(void)
 {
-	/* Ê¾Àı */
+	/* ç¤ºä¾‹ */
     //Drv_Timer_IRQHandler(&demoTIM);
 }
 
