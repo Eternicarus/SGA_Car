@@ -60,4 +60,10 @@
 .\objects\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\main.o: ..\Apply\Task\Inc\task_userinit.h
 .\objects\main.o: ..\Apply\Logic\Inc\usercode.h
+.\objects\main.o: ..\Bsp\OCD\Inc\ocd_conf.h
+.\objects\main.o: ..\Bsp\OCD\Inc\ocd_oled.h
+.\objects\main.o: ..\Bsp\OCD\Inc\ocd_mpu6050.h
+.\objects\main.o: ..\Bsp\Algo\Inc\algo_conf.h
+.\objects\main.o: ..\Bsp\Algo\Inc\algo_pid.h
+.\objects\main.o: ..\Bsp\Dev\Inc\dev_conf.h
 .\objects\main.o: ..\Apply\Task\Inc\task_sysinit.h

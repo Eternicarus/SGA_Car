@@ -8,8 +8,8 @@
 
 uint16_t ID;
 float Speed;
-uint8_t ReceBuf[100];
-uint8_t Num;
+volatile uint8_t ReceBuf[100];
+volatile uint8_t Num;
 
 /* ÓÃ»§Âß¼­´úÂë */
 void UserLogic_Code(void)
@@ -37,10 +37,11 @@ void UserLogic_Code(void)
 		// OCD_OLED_ShowFloatNum(&tOLED,0,2,Speed,16);
 		// Motor_SetSpeed(abs(Speed));
 
-		Num = Drv_Uart_Receive_DMA(&demoUart,ReceBuf);
+		
 		if(Num != 0)
 		{
 			Drv_Uart_Transmit_DMA(&demoUart,ReceBuf,Num);
+			Num = 0;
 		}
 	}
 }

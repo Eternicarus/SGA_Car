@@ -47,9 +47,18 @@ void USART2_IRQHandler(void)
 */
 void USART3_IRQHandler(void)
 {
+    uint16_t len;
+
 	Drv_Uart_IRQHandler(&demoUart);
     Drv_Uart_DMA_RxHandler(&demoUart);        /* 必需部分 */
 //	Drv_Uart_DMA_TxHandler(&demoUart);
+
+    // 立即读取数据，避免覆盖
+    len = Drv_Uart_Receive_DMA(&demoUart, ReceBuf);
+    if(len > 0)
+    {
+        Num = len;
+    }
 }
 
 void DMA1_Channel2_IRQHandler(void)
