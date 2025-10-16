@@ -8,6 +8,7 @@
 
 uint16_t ID;
 float Speed;
+extern float acc_pitch;
 
 /* ÓÃ»§Âß¼­´úÂë */
 void UserLogic_Code(void)
@@ -22,7 +23,7 @@ void UserLogic_Code(void)
 		
 		OCD_OLED_ShowNum(&tOLED,0,0,mpu6050_pending,1,16);
 		OCD_OLED_ShowFloatNum(&tOLED,0,2,tMPU6050.stcGyro.ConGyroX,16);
-		OCD_OLED_ShowFloatNum(&tOLED,0,4,tMPU6050.stcAcc.ConAccY,16);
+		OCD_OLED_ShowFloatNum(&tOLED,0,4,acc_pitch,16);
 		OCD_OLED_ShowFloatNum(&tOLED,0,6,tMPU6050.stcAngle.ConPitch,16);
 
 		// Speed = -Algo_PID_Calculate(&tPID_Balance,tMPU6050.stcAngle.ConPitch,0.0f);

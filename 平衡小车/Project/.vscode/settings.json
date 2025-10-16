@@ -65,7 +65,8 @@
         "ocd_mpu6050.h": "c",
         "ocd_ms5837.h": "c",
         "task_motorsys.h": "c",
-        "stdint.h": "c"
+        "stdint.h": "c",
+        "random": "c"
     },
     "files.encoding": "gb2312"
 }

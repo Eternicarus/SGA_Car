@@ -145,6 +145,7 @@ void OCD_MPU6050_DataConversion(tagMPU6050_T *_tMPU6050,float dt,uint8_t Num)
 {
     float acc_roll;
     float acc_pitch;
+    float alpha; // 动态互补滤波系数
     
     // 加速度转换，单位g
     _tMPU6050->stcAcc.ConAccX = (float)_tMPU6050->stcAcc.AccX[Num] / 16384.0f;
@@ -157,10 +158,24 @@ void OCD_MPU6050_DataConversion(tagMPU6050_T *_tMPU6050,float dt,uint8_t Num)
     _tMPU6050->stcGyro.ConGyroZ = (float)_tMPU6050->stcGyro.GyroZ[Num] / 16.4f;
 
     acc_roll = atan2(_tMPU6050->stcAcc.ConAccX, _tMPU6050->stcAcc.ConAccZ) * RAD2DEG;
-    acc_pitch = atan2(_tMPU6050->stcAcc.ConAccY, _tMPU6050->stcAcc.ConAccZ) * RAD2DEG;
+    acc_pitch = atan2(_tMPU6050->stcAcc.ConAccY, _tMPU6050->stcAcc.ConAccZ) * RAD2DEG + 6.0f; // 根据实际情况调整偏置
 
-    // 欧拉角计算（简单积分法，实际应用中建议使用滤波算法如互补滤波或卡尔曼滤波）
-    _tMPU6050->stcAngle.ConRoll = (_tMPU6050->stcAngle.ConRoll + _tMPU6050->stcGyro.ConGyroY * dt) * 0.98f + acc_roll * 0.02f;
-    _tMPU6050->stcAngle.ConPitch =  (_tMPU6050->stcAngle.ConPitch + _tMPU6050->stcGyro.ConGyroX * dt) * 0.98f + acc_pitch * 0.02f;
+     /* 动态权重分配：角度小时更相信加速度计，角度大时更相信陀螺仪 */
+    float abs_pitch = fabsf(acc_pitch);
+    
+    // 根据角度大小动态调整权重（角度越小alpha越小，越相信加速度计）
+    if (abs_pitch < 5.0f) {
+        alpha = 0.90f;  // 小角度：加速度计权重0.10
+    } else if (abs_pitch < 15.0f) {
+        alpha = 0.95f;  // 中角度：加速度计权重0.05
+    } else if (abs_pitch < 30.0f) {
+        alpha = 0.98f;  // 大角度：加速度计权重0.02
+    } else {
+        alpha = 0.99f;  // 极大角度：几乎只用陀螺仪
+    }
+
+    // 互补滤波（动态权重）
+    _tMPU6050->stcAngle.ConRoll = (_tMPU6050->stcAngle.ConRoll + _tMPU6050->stcGyro.ConGyroY * dt) * alpha + acc_roll * (1.0f - alpha);
+    _tMPU6050->stcAngle.ConPitch = (_tMPU6050->stcAngle.ConPitch + _tMPU6050->stcGyro.ConGyroX * dt) * alpha + acc_pitch * (1.0f - alpha);
     _tMPU6050->stcAngle.ConYaw = _tMPU6050->stcAngle.ConYaw + _tMPU6050->stcGyro.ConGyroZ * dt; // 无加速度计数据修正
 }

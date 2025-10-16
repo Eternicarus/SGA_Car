@@ -37,7 +37,7 @@ void Algo_PID_Update(tagPID_T *_tPid,float _faPID[3])
 */
 float Algo_PID_Calculate(tagPID_T *_tPid,float _fCurrValue,float _fExpValue)
 {
-    int Delt_Out; /* PID输出增量值 */
+    float Delt_Out; /* PID输出增量值 */
 
     /* 设定期望值和当前值 */
     _tPid->fExp_Value  = _fExpValue;
@@ -61,9 +61,24 @@ float Algo_PID_Calculate(tagPID_T *_tPid,float _fCurrValue,float _fExpValue)
     _tPid->fDbuf[0] = (_tPid->fError[0] - 2.0f * _tPid->fError[1] + _tPid->fError[2]);
     _tPid->fDout = _tPid->fKd * _tPid->fDbuf[0];
     
+    /* D项低通滤波，抑制高频噪声 */
+    if (_tPid->fD_lpf_alpha > 0.0f && _tPid->fD_lpf_alpha < 1.0f) {
+        _tPid->fDout_lpf = _tPid->fD_lpf_alpha * _tPid->fDout_lpf + (1.0f - _tPid->fD_lpf_alpha) * _tPid->fDout;
+    } else {
+        _tPid->fDout_lpf = _tPid->fDout;  /* 不启用滤波 */
+    }
+    
     /* 结果处理 */
-    Delt_Out = (int)(_tPid->fPout + _tPid->fIout + _tPid->fDout);    /* 计算增量输出 */
-    _tPid->fCtrl_Out = _tPid->fPre_Value + Delt_Out;                 /* 与前值累加 */
+    Delt_Out = _tPid->fPout + _tPid->fIout + _tPid->fDout_lpf;    /* 使用滤波后的D项 */
+    _tPid->fCtrl_Out = _tPid->fPre_Value + Delt_Out;                      /* 与前值累加 */
+
+
+    /* 新增：输出限幅 */
+    if(_tPid->fCtrl_Out > _tPid->fMax_Out)
+        _tPid->fCtrl_Out = _tPid->fMax_Out;
+    else if(_tPid->fCtrl_Out < -_tPid->fMax_Out)
+        _tPid->fCtrl_Out = -_tPid->fMax_Out;
+
     _tPid->fPre_Value = _tPid->fCtrl_Out;                            /* 记录数值，为下次PID做准备 */
 
     /* 存放过去两次误差值 */
@@ -87,7 +102,7 @@ void Algo_PID_Clear(tagPID_T *_tPid)
     _tPid->fDbuf[0] = _tPid->fDbuf[1] = _tPid->fDbuf[2] = 0.0f;
 
     /* 输出清零 */
-    _tPid->fCtrl_Out = _tPid->fPout = _tPid->fIout = _tPid->fDout = 0.0f;
+    _tPid->fCtrl_Out = _tPid->fPout = _tPid->fIout = _tPid->fDout = _tPid->fDout_lpf = 0.0f;
 
     /* 目标值和当前值清零 */
     _tPid->fCurr_Value = _tPid->fExp_Value = 0.0f;
@@ -111,5 +126,6 @@ void Algo_PID_Init(tagPID_T *_tPid)
     /* 初始化各个参数 */
     _tPid->fDbuf[0] = _tPid->fDbuf[1] = _tPid->fDbuf[2] = 0.0f;
     _tPid->fError[0] = _tPid->fError[1] = _tPid->fError[2] = _tPid->fPout = _tPid->fIout = _tPid->fDout = _tPid->fCtrl_Out = 0.0f;
+    _tPid->fDout_lpf = 0.0f;  /* 初始化低通滤波器状态 */
 }
 

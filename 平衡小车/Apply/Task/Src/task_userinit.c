@@ -22,6 +22,8 @@ void Task_UserInit(void)
 	Drv_Timer_Init(&tTimer2);
 	Drv_Timer_Enable(&tTimer2);
 
-//	Drv_Timer_Init(&tTimer3);
-//	Drv_Timer_Enable(&tTimer3);
+	Drv_Timer_Init(&tTimer3);
+	Drv_Timer_Enable(&tTimer3);
+
+	Algo_PID_Init(&tPID_Balance);
 }

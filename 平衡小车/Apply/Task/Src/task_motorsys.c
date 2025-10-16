@@ -47,7 +47,6 @@ void Motor_Stop(void)
  */
 void Motor_SetSpeed(uint8_t _usSpeed)
 {
-    if(_usSpeed > 20) _usSpeed = 20;
 
     Drv_PWM_DutyFactorSet(&PWM[0], _usSpeed);
     Drv_PWM_DutyFactorSet(&PWM[1], _usSpeed);

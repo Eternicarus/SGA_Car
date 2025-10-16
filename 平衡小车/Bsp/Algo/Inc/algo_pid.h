@@ -21,9 +21,12 @@ typedef struct pid
     float fPout;        /* 比例项输出 */
     float fIout;        /* 积分项输出 */
     float fDout;        /* 微分项输出 */
+    float fDout_lpf;    /* 微分项低通滤波后的输出 */
 
     float fDbuf[3];     /* 微分项最近三个值 0为最新 1上一次 2上上次 */
     float fError[3];    /* 误差项最近三个值 0为最新 1上一次 2上上次 */
+    
+    float fD_lpf_alpha; /* D项低通滤波系数（0~1，越大滤波越强，0表示不滤波） */
 
 }tagPID_T;
 

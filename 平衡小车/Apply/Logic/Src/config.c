@@ -3,9 +3,13 @@
 /* PID参数 */
 tagPID_T tPID_Balance = 
 {
-	.fKp = 9.0f,
+	.fKp = -4.7f,
 	.fKi = 0.0f,
-	.fKd = 0.0f,
+	.fKd = -2.5f,
+
+	.fMax_Out = 80.0f,
+	
+	.fD_lpf_alpha = 0.0f,  /* D项低通滤波系数：0.8表示较强滤波，适合有噪声的场景 */
 };
 
 /* GPIO句柄示例 */
