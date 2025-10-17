@@ -2,6 +2,7 @@
 #define __TASKCONF_H_
 
 #include "drv_hal.h"
+#include "algo_conf.h"
 
 #include "task_irq.h"
 #include "task_sysinit.h"

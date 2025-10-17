@@ -1,10 +1,12 @@
 #ifndef __TASK_MOTORSYS_H_
 #define __TASK_MOTORSYS_H_
 
+#define MOTOR_DEADZONE       5.0f
 
-void Motor_Forward(void);
-void Motor_Backward(void);
-void Motor_Stop(void);
-void Motor_SetSpeed(uint8_t _usSpeed);
+void Task_Motor_Forward(void);
+void Task_Motor_Backward(void);
+void Task_Motor_Stop(void);
+void Task_Motor_Setspeed(uint8_t _usspeed);
+float Task_Motor_Control(tagPID_T *_tPid,float _fExpValue);
 
 #endif // __TASK_MOTORSYS_H_

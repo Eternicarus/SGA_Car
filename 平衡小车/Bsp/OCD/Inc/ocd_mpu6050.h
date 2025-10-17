@@ -29,6 +29,12 @@
 #define MPU6050_RA_GYRO_ZOUT_H      0x47
 #define MPU6050_RA_GYRO_ZOUT_L      0x48
 
+#define MPU6050_INT_PIN_CFG         0x37    // INT 相关寄存器
+#define MPU6050_INT_ENABLE          0x38
+#define MPU6050_INT_STATUS          0x3A
+#define MPU6050_USER_CTRL_REG       0x6A    //内部IIC寄存器
+#define MPU6050_FIFO_EN_REG         0x23    // FIFO 相关寄存器
+
 #define RAD2DEG (180.0f / 3.14159265358979323846f) // 弧度转角度
 #define FIX_GYROX 1.6f // X轴角速度每秒的偏移
 
@@ -36,9 +42,9 @@
 typedef struct 
 {
 	/* 原始数据 */
-	short AccX[5];
-	short AccY[5];
-	short AccZ[5];
+	short AccX;
+	short AccY;
+	short AccZ;
 
 	/* 转换后的数据 */
 	float ConAccX;
@@ -50,9 +56,9 @@ typedef struct
 typedef struct 
 {
     /* 原始数据 */
-    short GyroX[5];
-    short GyroY[5];
-    short GyroZ[5];
+    short GyroX;
+    short GyroY;
+    short GyroZ;
 
     /* 转换后的数据 */
     float ConGyroX;
@@ -88,7 +94,7 @@ typedef struct
 
 uint8_t OCD_MPU6050_Init(tagMPU6050_T *_tMPU6050);
 uint8_t MPU6050_GetID(tagMPU6050_T *_tMPU6050);
-void OCD_MPU6050_GetData(tagMPU6050_T *_tMPU6050,uint8_t Num);
-void OCD_MPU6050_DataConversion(tagMPU6050_T *_tMPU6050,float dt,uint8_t Num);
+void OCD_MPU6050_GetData(tagMPU6050_T *_tMPU6050);
+void OCD_MPU6050_DataConversion(tagMPU6050_T *_tMPU6050,float dt);
 
 #endif

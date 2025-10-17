@@ -3,13 +3,22 @@
 /* PID参数 */
 tagPID_T tPID_Balance = 
 {
-	.fKp = -4.7f,
+	.fKp = -6.0f,
 	.fKi = 0.0f,
-	.fKd = -2.5f,
+	.fKd = -1.8f,
 
 	.fMax_Out = 80.0f,
 	
-	.fD_lpf_alpha = 0.0f,  /* D项低通滤波系数：0.8表示较强滤波，适合有噪声的场景 */
+	.fD_lpf_alpha = 0.85f,  /* D项低通滤波系数：0.8表示较强滤波，适合有噪声的场景 */
+};
+
+tagPID_T tPID_Velocity = 
+{
+	.fKp = -0.0f,
+	.fKi = -0.0f,
+	.fKd = -0.0f,
+
+	.fMax_Out = 0.0f,
 };
 
 /* GPIO句柄示例 */
@@ -46,6 +55,16 @@ tagGPIO_T demoGPIO[] =
 		.tGPIOInit.Pull 	= GPIO_NOPULL,				/* GPIO上下拉设置，是否需要上下拉看硬件 */
 		.tGPIOInit.Speed 	= GPIO_SPEED_FREQ_HIGH,		/* GPIO速度 */	
 		.tGPIOPort 			= GPIOB,					/* GPIO分组 */
+	},
+	[4]=
+	{ 
+		.tGPIOInit.Pin 		= GPIO_PIN_5,				/* GPIO引脚 */
+		.tGPIOInit.Mode 	= GPIO_MODE_IT_FALLING,		/* GPIO模式 */
+		.tGPIOInit.Pull 	= GPIO_PULLUP,				/* GPIO上下拉设置，是否需要上下拉看硬件 */
+		// .tGPIOInit.Speed 	= GPIO_SPEEREQ_HIGH,		/* GPIO速度 */	
+		.tGPIOPort 			= GPIOB,					/* GPIO分组 */
+		.ucPriority			= 2,
+		.ucSubPriority		= 2,
 	},
 };
 
@@ -128,26 +147,26 @@ tagPWM_T PWM[] =
 	},	  
 };
 
-tagTIM_T tTimer2 = 
-{
-	.tTimerHandle.Instance				= TIM2,						/* 通用定时器2 */
-	.fTimingLength						= 8,						/* 定时时长(ms) */
+// tagTIM_T tTimer2 = 
+// {
+// 	.tTimerHandle.Instance				= TIM2,						/* 通用定时器2 */
+// 	.fTimingLength						= 8,						/* 定时时长(ms) */
 
-	.ucPriority							= 2,						/* 中断优先级 */
-	.ucSubPriority						= 1,						/* 中断子优先级 */
-};
+// 	.ucPriority							= 2,						/* 中断优先级 */
+// 	.ucSubPriority						= 1,						/* 中断子优先级 */
+// };
 
-tagIWDG_T demoIWDG = 
-{
-	.usResetTime = 2000,			/* 2S喂狗溢出时间 */
-};
+// tagIWDG_T demoIWDG = 
+// {
+// 	.usResetTime = 2000,			/* 2S喂狗溢出时间 */
+// };
 
-tagTIM_T tTimer3 = 
-{
-	.tTimerHandle.Instance				= TIM3,						/* 通用定时器3 */
-	.fTimingLength						= 2,						/* 定时时长(ms) */
+// tagTIM_T tTimer3 = 
+// {
+// 	.tTimerHandle.Instance				= TIM3,						/* 通用定时器3 */
+// 	.fTimingLength						= 2,						/* 定时时长(ms) */
 
-	.ucPriority							= 2,						/* 中断优先级 */
-	.ucSubPriority						= 2,						/* 中断子优先级 */
-};
+// 	.ucPriority							= 2,						/* 中断优先级 */
+// 	.ucSubPriority						= 2,						/* 中断子优先级 */
+// };
 

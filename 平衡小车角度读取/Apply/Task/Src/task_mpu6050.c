@@ -18,8 +18,8 @@ void Task_MPU6050_Init(void)
  	}
     
     // 初始化互补滤波角度为当前角度
-    OCD_MPU6050_GetData(&tMPU6050, 0);
-    OCD_MPU6050_DataConversion(&tMPU6050, MPU6050_READ_INTERVAL_MS, 0);
+    OCD_MPU6050_GetData(&tMPU6050);
+    OCD_MPU6050_DataConversion(&tMPU6050, MPU6050_READ_INTERVAL_MS);
     tMPU6050.stcFixAngle.FixRoll = tMPU6050.stcAngle.ConRoll;
     tMPU6050.stcFixAngle.FixPitch = tMPU6050.stcAngle.ConPitch;
     tMPU6050.stcFixAngle.FixYaw = tMPU6050.stcAngle.ConYaw;
@@ -31,13 +31,13 @@ void Task_MPU6050_Init(void)
  * @param  dt  时间间隔，单位秒
  * @retval 无
  */
-// void Task_MPU6050_DataProcess(void)
-// {
-//     OCD_MPU6050_GetData(&tMPU6050);
-//     OCD_MPU6050_DataConversion(&tMPU6050,MPU6050_READ_INTERVAL_MS);
-//     // 减去初始角度偏移
-//     tMPU6050.stcAngle.ConRoll -= tMPU6050.stcFixAngle.FixRoll;
-//     tMPU6050.stcAngle.ConPitch -= tMPU6050.stcFixAngle.FixPitch;
-//     tMPU6050.stcAngle.ConYaw -= tMPU6050.stcFixAngle.FixYaw;
-// }
+void Task_MPU6050_DataProcess(void)
+{
+    OCD_MPU6050_GetData(&tMPU6050);
+    OCD_MPU6050_DataConversion(&tMPU6050,MPU6050_READ_INTERVAL_MS);
+    // 减去初始角度偏移
+    tMPU6050.stcAngle.ConRoll -= tMPU6050.stcFixAngle.FixRoll;
+    tMPU6050.stcAngle.ConPitch -= tMPU6050.stcFixAngle.FixPitch;
+    tMPU6050.stcAngle.ConYaw -= tMPU6050.stcFixAngle.FixYaw;
+}
 

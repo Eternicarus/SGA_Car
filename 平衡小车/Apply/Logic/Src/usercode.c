@@ -44,20 +44,20 @@ void UserLogic_Code(void)
 			Num = 0;
 		}
 
-		Speed = Algo_PID_Calculate(&tPID_Balance,tMPU6050.stcAngle.ConPitch,-1.0f);
-//		 OCD_OLED_ShowFloatNum(&tOLED,0,0,Speed,16);
+// 		Speed = Algo_PID_Calculate(&tPID_Balance,tMPU6050.stcAngle.ConPitch,-1.0f);
+// //		 OCD_OLED_ShowFloatNum(&tOLED,0,0,Speed,16);
 
-		if(Speed > 0.5f)
-			Motor_Forward();
-		else if(Speed < -0.5f)
-			Motor_Backward();
-		else
-			Motor_Stop();
+// 		if(Speed > 0.5f)
+// 			Motor_Forward();
+// 		else if(Speed < -0.5f)
+// 			Motor_Backward();
+// 		else
+// 			Motor_Stop();
 		
-		Speed += 5.0f;
+// 		Speed += 5.0f;
 		
-//		OCD_OLED_ShowFloatNum(&tOLED,0,2,Speed,16);
-		Motor_SetSpeed(fabsf(Speed));
+// //		OCD_OLED_ShowFloatNum(&tOLED,0,2,Speed,16);
+// 		Motor_SetSpeed(fabsf(Speed));
 
 	}
 }

@@ -9,8 +9,20 @@
 */
 void EXTI9_5_IRQHandler(void)
 {
-    //Drv_GPIO_EXTI_IRQHandler(&DS3231_ALARM_IRQ);	/* 必须加，参数需修改 */
+    Drv_GPIO_EXTI_IRQHandler(&demoGPIO[4]);	/* 必须加，参数需修改 */
 }
+
+/**
+ * @brief GPIO外部中断回调函数
+ * @param GPIO_Pin-触发中断的引脚
+ * @retval Null
+*/
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+    Task_MPU6050_DataProcess(); // 8ms周期
+    Task_Motor_Control(&tPID_Balance, 0.0f);         // 保持平衡
+}
+
 
 /**
  * @brief 外部中断10-15服务函数
@@ -96,9 +108,9 @@ void UART5_IRQHandler(void)
 */
 void TIM2_IRQHandler(void)
 {
-    Drv_Timer_IRQHandler(&tTimer2);
-    if (++mpu6050_pending <= 5)
-       OCD_MPU6050_GetData(&tMPU6050, mpu6050_pending);
+    // Drv_Timer_IRQHandler(&tTimer2);
+    // if (++mpu6050_pending <= 5)
+    //    OCD_MPU6050_GetData(&tMPU6050, mpu6050_pending);
 }
 
 /**
@@ -108,16 +120,16 @@ void TIM2_IRQHandler(void)
 void TIM3_IRQHandler(void)
 {
 	/* 示例 */
-   Drv_Timer_IRQHandler(&tTimer3);
-   if(mpu6050_pending)
-   {
-       OCD_MPU6050_DataConversion(&tMPU6050,MPU6050_READ_INTERVAL_MS, mpu6050_pending);
-       // 减去初始角度偏移
-       tMPU6050.stcAngle.ConRoll -= tMPU6050.stcFixAngle.FixRoll;
-       tMPU6050.stcAngle.ConPitch -= tMPU6050.stcFixAngle.FixPitch;
-       tMPU6050.stcAngle.ConYaw -= tMPU6050.stcFixAngle.FixYaw;
-       mpu6050_pending--;
-   }
+//    Drv_Timer_IRQHandler(&tTimer3);
+//    if(mpu6050_pending)
+//    {
+//        OCD_MPU6050_DataConversion(&tMPU6050,MPU6050_READ_INTERVAL_MS, mpu6050_pending);
+//        // 减去初始角度偏移
+//        tMPU6050.stcAngle.ConRoll -= tMPU6050.stcFixAngle.FixRoll;
+//        tMPU6050.stcAngle.ConPitch -= tMPU6050.stcFixAngle.FixPitch;
+//        tMPU6050.stcAngle.ConYaw -= tMPU6050.stcFixAngle.FixYaw;
+//        mpu6050_pending--;
+//    }
 }
 
 /**

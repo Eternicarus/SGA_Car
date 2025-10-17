@@ -43,6 +43,16 @@ tagGPIO_T demoGPIO[] =
 		.tGPIOInit.Speed 	= GPIO_SPEED_FREQ_HIGH,		/* GPIO速度 */	
 		.tGPIOPort 			= GPIOB,					/* GPIO分组 */
 	},
+	[4]=
+	{ 
+		.tGPIOInit.Pin 		= GPIO_PIN_5,				/* GPIO引脚 */
+		.tGPIOInit.Mode 	= GPIO_MODE_IT_FALLING,		/* GPIO模式 */
+		.tGPIOInit.Pull 	= GPIO_PULLUP,				/* GPIO上下拉设置，是否需要上下拉看硬件 */
+		// .tGPIOInit.Speed 	= GPIO_SPEEREQ_HIGH,		/* GPIO速度 */	
+		.tGPIOPort 			= GPIOB,					/* GPIO分组 */
+		.ucPriority			= 2,
+		.ucSubPriority		= 2,
+	},
 };
 
 /* 串口句柄示例 */
@@ -174,20 +184,20 @@ tagPWM_T PWM[] =
 	},	  
 };
 
-tagTIM_T tTimer2 = 
-{
-	.tTimerHandle.Instance				= TIM2,						/* 通用定时器2 */
-	.fTimingLength						= 8,						/* 定时时长(ms) */
+// tagTIM_T tTimer2 = 
+// {
+// 	.tTimerHandle.Instance				= TIM2,						/* 通用定时器2 */
+// 	.fTimingLength						= 8,						/* 定时时长(ms) */
 
-	.ucPriority							= 1,						/* 中断优先级 */
-	.ucSubPriority						= 2,						/* 中断子优先级 */
-};
+// 	.ucPriority							= 1,						/* 中断优先级 */
+// 	.ucSubPriority						= 2,						/* 中断子优先级 */
+// };
 
-tagTIM_T tTimer3 = 
-{
-	.tTimerHandle.Instance				= TIM3,						/* 通用定时器3 */
-	.fTimingLength						= 2,						/* 定时时长(ms) */
+// tagTIM_T tTimer3 = 
+// {
+// 	.tTimerHandle.Instance				= TIM3,						/* 通用定时器3 */
+// 	.fTimingLength						= 2,						/* 定时时长(ms) */
 
-	.ucPriority							= 2,						/* 中断优先级 */
-	.ucSubPriority						= 1,						/* 中断子优先级 */
-};
+// 	.ucPriority							= 2,						/* 中断优先级 */
+// 	.ucSubPriority						= 1,						/* 中断子优先级 */
+// };
