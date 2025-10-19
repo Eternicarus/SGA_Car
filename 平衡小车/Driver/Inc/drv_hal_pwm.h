@@ -3,7 +3,8 @@
 
 #include "drv_hal_conf.h"
 
-#define MAX_RELOAD		1000000
+#define TIM_PSC			1				/* 定时器预分频值 */
+#define MAX_RELOAD		SYSTEM_CLOCK * 1000000 / TIM_PSC
 
 static uint8_t *s_ucpCheckCache;	/* PWM通道占用检验 */
 

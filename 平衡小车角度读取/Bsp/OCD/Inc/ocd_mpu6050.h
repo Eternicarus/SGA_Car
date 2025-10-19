@@ -32,8 +32,8 @@
 #define MPU6050_INT_PIN_CFG         0x37    // INT 相关寄存器
 #define MPU6050_INT_ENABLE          0x38
 #define MPU6050_INT_STATUS          0x3A
-#define MPU6050_USER_CTRL_REG           0x6A    //内部IIC寄存器
-#define MPU6050_FIFO_EN_REG             0x23    // FIFO 相关寄存器
+#define MPU6050_USER_CTRL_REG       0x6A    //内部IIC寄存器
+#define MPU6050_FIFO_EN_REG         0x23    // FIFO 相关寄存器
 
 #define RAD2DEG (180.0f / 3.14159265358979323846f) // 弧度转角度
 #define FIX_GYROX 1.6f // X轴角速度每秒的偏移

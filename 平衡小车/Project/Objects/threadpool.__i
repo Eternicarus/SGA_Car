@@ -1,0 +1,4 @@
+--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\Apply\Logic\Inc -I ..\Apply\Task\Inc -I ..\Bsp\OCD\Inc -I ..\Bsp\FatFs\Inc -I ..\Bsp\Algo\Inc -I ..\Bsp\Dev\Inc -I ..\Bsp\RTOS\RT-Thread\include -I ..\Bsp\RTOS\FreeRTOS\include -I ..\Bsp\RTOS\FreeRTOS\CMSIS_RTOS_V2 -I ..\Bsp\RTOS\FreeRTOS\portable\RVDS\ARM_CM3 -I ..\Driver\Inc -I ..\Hardware\STM32F1XX\CMSIS\Include -I ..\Hardware\STM32F1XX\CMSIS\Device\ST\STM32F1xx\Include -I ..\Hardware\STM32F1XX\STM32F1xx_HAL_Driver\Inc -I ..\Hardware\STM32F1XX\STM32F1xx_HAL_Driver\Inc\Legacy
+-ID:\Keil_v5\ARM\Pack\Keil\STM32F1xx_DFP\2.2.0\Device\Include
+-D__UVISION_VERSION="540" -DSTM32F10X_HD -DUSE_HAL_DRIVER -DSTM32F103xE -DSTM32F1_SGA_ENABLE
+-o .\objects\threadpool.o --omf_browse .\objects\threadpool.crf --depend .\objects\threadpool.d "..\Apply\Logic\Src\threadpool.c"

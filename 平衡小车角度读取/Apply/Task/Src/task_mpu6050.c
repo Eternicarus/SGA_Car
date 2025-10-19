@@ -6,14 +6,13 @@ volatile uint8_t mpu6050_pending = 0;
 
 void Task_MPU6050_Init(void)
 {
-    OCD_MPU6050_Init(&tMPU6050);
-    Drv_Delay_Ms(100);
-    
-    if (!OCD_MPU6050_Init(&tMPU6050) == 0)
+    uint8_t ret;
+    ret = OCD_MPU6050_Init(&tMPU6050);
+
+    if (ret != 0)
 	{
- 		uint8_t Num = OCD_MPU6050_Init(&tMPU6050);
 		OCD_OLED_ShowString(&tOLED,0,0,"MPU6050 Err",16);
-		OCD_OLED_ShowNum(&tOLED,0,2,Num,10,16);
+		OCD_OLED_ShowNum(&tOLED,0,2,ret,10,16);
 		while(1);	
  	}
     

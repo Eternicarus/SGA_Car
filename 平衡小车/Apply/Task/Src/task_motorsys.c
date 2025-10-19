@@ -42,17 +42,34 @@ void Task_Motor_Stop(void)
 
 /**
  * @brief 电机转速设置
- * @param _usspeed-转速值，范围0-255
+ * @param _usspeed-转速值，范围0-7200
  * @retval Null
  */
-void Task_Motor_Setspeed(uint8_t _usspeed)
+void Task_Motor_Setspeed(uint16_t _usspeed)
 {
-    Drv_PWM_DutyFactorSet(&PWM[0], _usspeed);
-    Drv_PWM_DutyFactorSet(&PWM[1], _usspeed);
+    Drv_PWM_HighLvTimeSet(&PWM[0], _usspeed);
+    Drv_PWM_HighLvTimeSet(&PWM[1], _usspeed);
 }
 
 /**
- * @brief 电机PID控制函数
+ * @brief 电机PD位置式控制函数
+ * @param _tPid-PID句柄指针
+ * @param _fExpValue-期望值
+ * @retval speed-当前计算出的速度值
+ */
+float Task_Motor_PDControl(tagPID_T *_tPid, float _fExpValue)
+{
+    float speed;
+    float error;
+    //PID计算
+    error = tMPU6050.stcAngle.ConPitch - _fExpValue;
+    speed = _tPid->fKp * error + _tPid->fKd * tMPU6050.stcGyro.GyroX;
+
+    return speed;
+}
+
+/**
+ * @brief 电机控制函数
  * @param _tPid-PID句柄指针
  * @param _fExpValue-期望值
  * @retval speed-当前计算出的速度值
@@ -62,7 +79,7 @@ float Task_Motor_Control(tagPID_T *_tPid,float _fExpValue)
     float speed;
     float pid_out;
     //PID计算
-    pid_out = Algo_PID_Calculate(_tPid,tMPU6050.stcAngle.ConPitch,_fExpValue);
+    pid_out = Task_Motor_PDControl(_tPid,_fExpValue);
 
     // 电机方向控制
 	if(pid_out > 0.5f)

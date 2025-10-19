@@ -3,13 +3,12 @@
 /* PID参数 */
 tagPID_T tPID_Balance = 
 {
-	.fKp = -6.0f,
-	.fKi = 0.0f,
-	.fKd = -1.8f,
+	.fKp = 200.0f,
+	.fKd = -0.0f,
 
 	.fMax_Out = 80.0f,
 	
-	.fD_lpf_alpha = 0.85f,  /* D项低通滤波系数：0.8表示较强滤波，适合有噪声的场景 */
+	.fD_lpf_alpha = 0.8f,  /* D项低通滤波系数：0.8表示较强滤波，适合有噪声的场景 */
 };
 
 tagPID_T tPID_Velocity = 
@@ -124,7 +123,7 @@ tagMPU6050_T tMPU6050 =
 };
 
 tagPWM_T PWM[] =
-{
+{ 
 	[0] =
 	{
 		.tPWMHandle.Instance	= TIM1,         	/* 定时器1 */

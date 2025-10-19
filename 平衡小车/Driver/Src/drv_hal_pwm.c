@@ -9,6 +9,9 @@
 * 文件历史：
 
 * 版本号	   日期		  	作者		  说明
+
+*  2.8		2025-10-20   黄仕鹏		修改了PWM波高电平时间的适用范围，以及内存分配问题
+
 *  2.7		2023-08-09   鲍程璐		减少初始化结构体必要参数，现仅需I/O即可输出
 
 *  2.6     	2023-06-07   鲍程璐		更改部分函数命名
@@ -66,7 +69,7 @@ static void S_PWM_CLKEnable(tagPWM_T *_tPWM)
 */
 static void S_PWM_PramConfig(tagPWM_T *_tPWM)
 {	
-	_tPWM->tPWMHandle.Init.Prescaler			= SYSTEM_CLOCK - 1;         		/* 定时器分频 */
+	_tPWM->tPWMHandle.Init.Prescaler			= TIM_PSC - 1;         		/* 定时器分频 */
 	_tPWM->tPWMHandle.Init.CounterMode			= TIM_COUNTERMODE_UP;			    /* 向上计数模式 */
 	_tPWM->tPWMHandle.Init.Period				= MAX_RELOAD /_tPWM->ulFreq - 1;	/* 自动重装载值 */
 	_tPWM->tPWMHandle.Init.ClockDivision		= TIM_CLOCKDIVISION_DIV1;
@@ -510,7 +513,6 @@ void Drv_PWM_DutyFactorSet(tagPWM_T *_tPWM, float _fDuty)
 		break;
 	}
 }
-
 /**
  * @brief PWM波高电平时间设置
  * @param _tPWM-PWM结构体指针
@@ -520,31 +522,31 @@ void Drv_PWM_DutyFactorSet(tagPWM_T *_tPWM, float _fDuty)
 */
 void Drv_PWM_HighLvTimeSet(tagPWM_T *_tPWM, uint16_t _usTime)
 {
-	if(_tPWM->ulFreq == 50)
-	{
+	// if(_tPWM->ulFreq == 50)
+	// {
 		switch(_tPWM->ucChannel)
 		{
 			case TIM_CHANNEL_1:
-				_tPWM->tPWMHandle.Instance->CCR1 = _usTime;
+				_tPWM->tPWMHandle.Instance->CCR1 = _usTime * MAX_RELOAD / 1000000;
 			break;
 			
 			case TIM_CHANNEL_2:
-				_tPWM->tPWMHandle.Instance->CCR2 = _usTime;
+				_tPWM->tPWMHandle.Instance->CCR2 = _usTime * MAX_RELOAD / 1000000;
 			break;
 			
 			case TIM_CHANNEL_3:
-				_tPWM->tPWMHandle.Instance->CCR3 = _usTime;
+				_tPWM->tPWMHandle.Instance->CCR3 = _usTime * MAX_RELOAD / 1000000;
 			break;
 			
 			case TIM_CHANNEL_4:
-				_tPWM->tPWMHandle.Instance->CCR4 = _usTime;
+				_tPWM->tPWMHandle.Instance->CCR4 = _usTime * MAX_RELOAD / 1000000;
 			break;
 			
 			default:
 				Drv_HAL_Error(__FILE__, __LINE__);
 			break;
 		}
-	}
+	// }
 }
 
 /**
@@ -557,7 +559,7 @@ void Drv_PWM_Init(tagPWM_T *_tPWM, uint8_t _ucNum)
 {
 	uint8_t index;
 
-    s_ucpCheckCache = (uint8_t *)calloc(0,24);
+    s_ucpCheckCache = (uint8_t *)calloc(1,24);
 	
 	for(index = 0;index < _ucNum;index++)
 	{

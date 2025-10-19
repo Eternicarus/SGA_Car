@@ -83,7 +83,7 @@ uint8_t OCD_MPU6050_Init(tagMPU6050_T *_tMPU6050)
     Drv_Delay_Ms(20);
 
    // 设置低通滤波（CONFIG寄存器，0x1A，0x06）
-    S_MPU6050_Write(_tMPU6050, MPU6050_CONFIG, 0x06);
+    S_MPU6050_Write(_tMPU6050, MPU6050_CONFIG, 0x03);
     Drv_Delay_Ms(20);
 
     // 配置 INT 引脚为低电平有效，推挽输出，保持高电平（INT_PIN_CFG寄存器，0x37，0x80）
