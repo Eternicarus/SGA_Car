@@ -42,13 +42,13 @@ void Task_Motor_Stop(void)
 
 /**
  * @brief 电机转速设置
- * @param _usspeed-转速值，范围0-7200
+ * @param _usspeed-转速值，范围0-100
  * @retval Null
  */
-void Task_Motor_Setspeed(uint16_t _usspeed)
+void Task_Motor_Setspeed(float _fspeed)
 {
-    Drv_PWM_HighLvTimeSet(&PWM[0], _usspeed);
-    Drv_PWM_HighLvTimeSet(&PWM[1], _usspeed);
+    Drv_PWM_DutyFactorSet(&PWM[0], _fspeed);
+    Drv_PWM_DutyFactorSet(&PWM[1], _fspeed);
 }
 
 /**
@@ -63,7 +63,23 @@ float Task_Motor_PDControl(tagPID_T *_tPid, float _fExpValue)
     float error;
     //PID计算
     error = tMPU6050.stcAngle.ConPitch - _fExpValue;
-    speed = _tPid->fKp * error + _tPid->fKd * tMPU6050.stcGyro.GyroX;
+    _tPid->fPout = _tPid->fKp * error;
+    _tPid->fDout = tMPU6050.stcGyro.ConGyroX;
+
+    /* D项低通滤波，抑制高频噪声 */
+    if (_tPid->fD_lpf_alpha > 0.0f && _tPid->fD_lpf_alpha < 1.0f) {
+        _tPid->fDout_lpf = _tPid->fD_lpf_alpha * _tPid->fDout_lpf + (1.0f - _tPid->fD_lpf_alpha) * _tPid->fDout;
+    } else {
+        _tPid->fDout_lpf = _tPid->fDout;  /* 不启用滤波 */
+    }
+
+    speed = _tPid->fPout + _tPid->fDout_lpf;
+
+    /* 输出限幅 */
+    if(speed > _tPid->fMax_Out)
+        speed = _tPid->fMax_Out;
+    else if(speed < -_tPid->fMax_Out)
+        speed = -_tPid->fMax_Out;
 
     return speed;
 }
@@ -90,7 +106,7 @@ float Task_Motor_Control(tagPID_T *_tPid,float _fExpValue)
 		Task_Motor_Stop();
 	
     // 去电机死区,根据实际电机调节
-	speed = fabsf(pid_out) + MOTOR_DEADZONE;
+	speed =  fabsf(pid_out) + MOTOR_DEADZONE;
 	
     //设定速度
 	Task_Motor_Setspeed(speed);

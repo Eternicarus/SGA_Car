@@ -73,7 +73,7 @@ float Algo_PID_Calculate(tagPID_T *_tPid,float _fCurrValue,float _fExpValue)
     _tPid->fCtrl_Out = _tPid->fPre_Value + Delt_Out;                      /* 与前值累加 */
 
 
-    /* 新增：输出限幅 */
+    /* 输出限幅 */
     if(_tPid->fCtrl_Out > _tPid->fMax_Out)
         _tPid->fCtrl_Out = _tPid->fMax_Out;
     else if(_tPid->fCtrl_Out < -_tPid->fMax_Out)

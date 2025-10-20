@@ -9,9 +9,9 @@ void Task_UserInit(void)
 	
 	OCD_OLED_Init(&tOLED);
 
-	Drv_PWM_Init(PWM,2);
-
 	Task_MPU6050_Init();
+	
+	Drv_PWM_Init(PWM,2);
 	
 	Drv_GPIO_Init(demoGPIO, 5);
 

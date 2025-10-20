@@ -146,7 +146,7 @@ void OCD_MPU6050_GetData(tagMPU6050_T *_tMPU6050)
    // 读取角速度数据
    dataH = S_MPU6050_Read(_tMPU6050, MPU6050_RA_GYRO_XOUT_H);
    dataL = S_MPU6050_Read(_tMPU6050, MPU6050_RA_GYRO_XOUT_L);
-   _tMPU6050->stcGyro.GyroX = (dataH << 8) | dataL;
+   _tMPU6050->stcGyro.GyroX = ((dataH << 8) | dataL) - FIX_GYROX;
 
    dataH = S_MPU6050_Read(_tMPU6050, MPU6050_RA_GYRO_YOUT_H);
    dataL = S_MPU6050_Read(_tMPU6050, MPU6050_RA_GYRO_YOUT_L);
@@ -212,7 +212,7 @@ void OCD_MPU6050_DataConversion(tagMPU6050_T *_tMPU6050,float dt)
     _tMPU6050->stcAcc.ConAccZ = (float)_tMPU6050->stcAcc.AccZ / 16384.0f;
 
     // 角速度转换，单位度每秒
-    _tMPU6050->stcGyro.ConGyroX = (float)_tMPU6050->stcGyro.GyroX / 16.4f + FIX_GYROX;
+    _tMPU6050->stcGyro.ConGyroX = (float)_tMPU6050->stcGyro.GyroX / 16.4f;
     _tMPU6050->stcGyro.ConGyroY = (float)_tMPU6050->stcGyro.GyroY / 16.4f;
     _tMPU6050->stcGyro.ConGyroZ = (float)_tMPU6050->stcGyro.GyroZ / 16.4f;
 

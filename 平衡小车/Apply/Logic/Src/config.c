@@ -3,8 +3,11 @@
 /* PID²ÎÊý */
 tagPID_T tPID_Balance = 
 {
-	.fKp = 200.0f,
-	.fKd = -0.0f,
+	.fKp = 6.5f,
+	.fKd = 0.15f,
+	
+//	.fKp = 3.3f,
+//	.fKd = 0.042f,
 
 	.fMax_Out = 80.0f,
 	
