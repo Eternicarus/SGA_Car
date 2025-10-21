@@ -3,15 +3,15 @@
 /* PID参数 */
 tagPID_T tPID_Balance = 
 {
-	.fKp = 6.5f,
-	.fKd = 0.15f,
+//	.fKp = 6.0f,
+//	.fKd = 0.1f,
 	
-//	.fKp = 3.3f,
-//	.fKd = 0.042f,
+	.fKp = 3.6f,
+	.fKd = 0.06f,
 
-	.fMax_Out = 80.0f,
+	.fMax_Out = 100.0f,
 	
-	.fD_lpf_alpha = 0.8f,  /* D项低通滤波系数：0.8表示较强滤波，适合有噪声的场景 */
+//	.fD_lpf_alpha = 0.7f,  /* D项低通滤波系数：0.8表示较强滤波，适合有噪声的场景 */
 };
 
 tagPID_T tPID_Velocity = 

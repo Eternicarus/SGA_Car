@@ -16,8 +16,8 @@ void UserLogic_Code(void)
 	Drv_GPIO_Reset(&demoGPIO[2]);
 	while(1)
 	{
-		Drv_PWM_HighLvTimeSet(&PWM[0], 1500);
-   		Drv_PWM_HighLvTimeSet(&PWM[1], 1500);
+		Drv_PWM_DutyFactorSet(&PWM[0], 10);
+   		Drv_PWM_DutyFactorSet(&PWM[1], 10);
 		Drv_Delay_Ms(100);
 	}
 }

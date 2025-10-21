@@ -64,7 +64,7 @@ float Task_Motor_PDControl(tagPID_T *_tPid, float _fExpValue)
     //PID¼ÆËã
     error = tMPU6050.stcAngle.ConPitch - _fExpValue;
     _tPid->fPout = _tPid->fKp * error;
-    _tPid->fDout = tMPU6050.stcGyro.ConGyroX;
+    _tPid->fDout = _tPid->fKd * tMPU6050.stcGyro.ConGyroX;
 
     /* DÏîµÍÍ¨ÂË²¨£¬ÒÖÖÆ¸ßÆµÔëÉù */
     if (_tPid->fD_lpf_alpha > 0.0f && _tPid->fD_lpf_alpha < 1.0f) {
