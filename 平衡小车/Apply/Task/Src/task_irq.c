@@ -20,7 +20,7 @@ void EXTI9_5_IRQHandler(void)
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
     Task_MPU6050_DataProcess(); // 8ms周期
-    Task_Motor_Control(&tPID_Balance, -7.0f);         // 保持平衡
+    Task_Motor_Control(&tPID_Balance, -4.0f);         // 保持平衡
 }
 
 

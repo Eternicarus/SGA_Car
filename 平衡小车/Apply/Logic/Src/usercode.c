@@ -21,7 +21,7 @@ void UserLogic_Code(void)
 	{
 		// OCD_OLED_ShowFloatNum(&tOLED,0,2,tMPU6050.stcGyro.ConGyroX,16);
 		// OCD_OLED_ShowFloatNum(&tOLED,0,4,tMPU6050.stcAcc.ConAccY,16);
-		//  OCD_OLED_ShowFloatNum(&tOLED,0,4,tMPU6050.stcAngle.ConPitch,16);
+		  OCD_OLED_ShowFloatNum(&tOLED,0,4,tMPU6050.stcAngle.ConPitch,16);
 
 		// if(strcmp((char *)ReceBuf,"PID") == 0)
 		// {
